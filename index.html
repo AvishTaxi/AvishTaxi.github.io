@@ -328,7 +328,19 @@
      }
     }
    ],
-   "sameAs": []
+   "sameAs": [],
+   "founder": {
+    "@type": "Person",
+    "name": "Avishka",
+    "jobTitle": "Driver and tour guide",
+    "knowsLanguage": [
+     "en",
+     "si"
+    ],
+    "worksFor": {
+     "@id": "https://avishtaxi.github.io/#business"
+    }
+   }
   },
   {
    "@type": "WebSite",
@@ -875,6 +887,52 @@ section{position:relative}
 @media (max-width:699px){.lb-prev,.lb-next{top:auto;bottom:calc(18px + env(safe-area-inset-bottom));margin:0}.lb-prev{left:calc(50% - 60px)}.lb-next{right:calc(50% - 60px)}}
 @keyframes fade{from{opacity:0}to{opacity:1}}
 
+/* Booking request dialog (opens from every WhatsApp button) */
+.bk{border:0;padding:0;margin:auto;width:min(100% - 24px,580px);max-height:min(92dvh,860px);border-radius:24px;background:var(--surface);color:var(--ink);box-shadow:var(--shadow-lg);overflow:hidden}
+.bk[open]{display:flex;animation:bkin .28s cubic-bezier(.2,.8,.2,1)}
+.bk::backdrop{background:rgba(4,20,20,.6);backdrop-filter:blur(3px)}
+@keyframes bkin{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.bk-form{display:flex;flex-direction:column;width:100%;max-height:inherit}
+.bk-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:20px 22px 14px;border-bottom:1px solid var(--line)}
+.bk-kicker{font-size:.74rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--brand)}
+.bk-head h2{font-size:1.45rem;margin-top:4px}
+.bk-x{width:44px;height:44px;flex:none;border-radius:50%;border:1.5px solid var(--line);background:transparent;display:grid;place-items:center;cursor:pointer}
+.bk-x:hover{background:var(--surface-2)}
+.bk-body{padding:16px 22px 8px;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+.bk-intro{color:var(--muted);font-size:.95rem;margin-bottom:14px}
+.bk-fields{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.bk-fields .full{grid-column:1/-1}
+@media (max-width:480px){.bk-fields > :not(.st){grid-column:1/-1}}
+.bk .field label,.bk .lbl{display:block;font-size:.86rem;font-weight:600;margin-bottom:7px;color:var(--ink-2)}
+.bk .field .req{color:var(--coral)}
+.bk .field input,.bk .field select,.bk .field textarea{width:100%;min-height:50px;padding:12px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);font-size:1rem}
+.bk .field textarea{min-height:84px;resize:vertical}
+.bk .field input:focus,.bk .field select:focus,.bk .field textarea:focus{outline:none;border-color:var(--brand);box-shadow:0 0 0 4px color-mix(in srgb,var(--brand) 18%,transparent)}
+.bk .field [aria-invalid="true"]{border-color:var(--coral)}
+[data-theme="dark"] .bk .field input[type="date"],[data-theme="dark"] .bk .field input[type="time"]{color-scheme:dark}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg label{position:relative;margin:0}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg span{display:inline-flex;align-items:center;min-height:44px;padding:10px 15px;border-radius:999px;border:1.5px solid var(--line);font-size:.92rem;font-weight:600;cursor:pointer;transition:background .15s,border-color .15s,color .15s;user-select:none}
+.seg input:checked + span{background:var(--brand);border-color:var(--brand);color:var(--brand-ink)}
+.seg input:focus-visible + span{outline:3px solid var(--gold);outline-offset:2px}
+.stepper{display:flex;align-items:center;gap:0;border:1.5px solid var(--line);border-radius:12px;overflow:hidden;background:var(--bg);width:max-content}
+.stepper button{width:50px;height:48px;border:0;background:transparent;font-size:1.4rem;cursor:pointer;color:var(--brand)}
+.stepper button:hover{background:var(--surface-2)}
+.stepper output{min-width:46px;text-align:center;font-weight:700;font-size:1.05rem}
+.bk-preview{margin:18px 0 6px;border-radius:14px;background:color-mix(in srgb,var(--wa) 8%,var(--surface-2));border:1px solid color-mix(in srgb,var(--wa) 25%,transparent)}
+.bk-preview summary{cursor:pointer;padding:12px 14px;font-weight:650;font-size:.9rem}
+.bk-preview pre{margin:0;padding:0 14px 14px;white-space:pre-wrap;word-break:break-word;font-family:var(--font-sans);font-size:.9rem;line-height:1.55;color:var(--ink-2)}
+.bk-foot{padding:12px 22px calc(16px + env(safe-area-inset-bottom));border-top:1px solid var(--line);background:var(--surface)}
+.bk-err{color:var(--coral);font-weight:600;font-size:.9rem;min-height:0;margin-bottom:8px}
+.bk-err:empty{display:none}
+.bk-note{text-align:center;font-size:.8rem;color:var(--muted);margin-top:8px}
+@media (max-width:600px){
+  .bk{width:100%;max-width:100%;max-height:100dvh;height:100dvh;border-radius:0;margin:0}
+  .bk[open]{animation:bkup .3s cubic-bezier(.2,.8,.2,1)}
+  @keyframes bkup{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+}
+
 /* Mobile bottom action bar (thumb-friendly booking) */
 .mbar{position:fixed;left:0;right:0;bottom:0;z-index:95;display:grid;grid-template-columns:1fr 1.6fr;gap:10px;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:color-mix(in srgb,var(--surface) 92%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--line);box-shadow:0 -8px 24px -12px rgba(0,0,0,.25);transform:translateY(110%);transition:transform .35s cubic-bezier(.2,.8,.2,1)}
 .mbar.show{transform:none}
@@ -977,10 +1035,10 @@ section{position:relative}
       <button class="icon-btn theme-toggle" type="button" aria-label="Switch between light and dark mode">
         <svg class="icon sun"><use href="#i-sun"/></svg><svg class="icon moon"><use href="#i-moon"/></svg>
       </button>
-      <a class="btn btn-sm nav-call" href="tel:+94770000000" data-tel aria-label="Call Avish">
+      <a class="btn btn-sm nav-call" href="tel:+94770000000" data-tel aria-label="Call Avishka">
         <svg class="icon"><use href="#i-phone"/></svg><span class="label">Call</span>
       </a>
-      <a class="btn btn-sm btn-wa" href="https://wa.me/94770000000" data-wa="Hi Avish, I'd like to book a taxi from [location] to [destination] on [date]." target="_blank" rel="noopener" aria-label="Book on WhatsApp">
+      <a class="btn btn-sm btn-wa" href="https://wa.me/94770000000" data-wa="Hi Avishka, I'd like to book a taxi from [location] to [destination] on [date]." data-book="taxi" target="_blank" rel="noopener" aria-label="Book on WhatsApp">
         <svg class="icon"><use href="#i-wa"/></svg><span class="label">WhatsApp</span>
       </a>
       <button class="icon-btn menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
@@ -1001,7 +1059,7 @@ section{position:relative}
   <a class="link" href="#contact">Contact <svg class="icon"><use href="#i-arrow"/></svg></a>
   <div class="row">
     <a class="btn btn-outline" href="tel:+94770000000" data-tel><svg class="icon"><use href="#i-phone"/></svg>Call</a>
-    <a class="btn btn-wa" href="https://wa.me/94770000000" data-wa="Hi Avish, I'd like to book a taxi from [location] to [destination] on [date]." target="_blank" rel="noopener"><svg class="icon"><use href="#i-wa"/></svg>WhatsApp</a>
+    <a class="btn btn-wa" href="https://wa.me/94770000000" data-wa="Hi Avishka, I'd like to book a taxi from [location] to [destination] on [date]." data-book="taxi" target="_blank" rel="noopener"><svg class="icon"><use href="#i-wa"/></svg>WhatsApp</a>
   </div>
 </div>
 
@@ -1024,7 +1082,7 @@ section{position:relative}
       <h1 id="hero-title">Reliable Taxi &amp; Private Tours in <em>Tangalle</em></h1>
       <p class="hero-sub">Airport transfers, day tours &amp; island-wide journeys with a trusted local driver. Your trusted ride in paradise.</p>
       <div class="hero-ctas">
-        <a class="btn btn-wa btn-lg" href="https://wa.me/94770000000" data-wa="Hi Avish, I'd like to book a taxi from [location] to [destination] on [date]." target="_blank" rel="noopener">
+        <a class="btn btn-wa btn-lg" href="https://wa.me/94770000000" data-wa="Hi Avishka, I'd like to book a taxi from [location] to [destination] on [date]." data-book="taxi" target="_blank" rel="noopener">
           <svg class="icon"><use href="#i-wa"/></svg>Book via WhatsApp
         </a>
         <a class="btn btn-ghost btn-lg" href="#services">View Services <svg class="icon"><use href="#i-arrow"/></svg></a>
@@ -1085,7 +1143,7 @@ section{position:relative}
           <li><svg class="icon"><use href="#i-check"/></svg>Fast Southern Expressway route</li>
           <li><svg class="icon"><use href="#i-check"/></svg>Flight delays? We wait for you</li>
         </ul>
-        <a class="btn btn-wa btn-sm" href="https://wa.me/94770000000" data-wa="Hi Avish, I'd like to book an airport transfer from [airport / location] to [destination] on [date]. Flight number: [flight]." target="_blank" rel="noopener"><svg class="icon"><use href="#i-wa"/></svg>Book Now</a>
+        <a class="btn btn-wa btn-sm" href="https://wa.me/94770000000" data-wa="Hi Avishka, I'd like to book an airport transfer from [airport / location] to [destination] on [date]. Flight number: [flight]." data-book="airport" target="_blank" rel="noopener"><svg class="icon"><use href="#i-wa"/></svg>Book Now</a>
       </article>
 
       <article class="card service reveal d1">
@@ -1097,7 +1155,7 @@ section{position:relative}
           <li><svg class="icon"><use href="#i-check"/></svg>Stops for photos &amp; food on request</li>
           <li><svg class="icon"><use href="#i-check"/></svg>Day or night, short or long</li>
         </ul>
-        <a class="btn btn-wa btn-sm" href="https://wa.me/94770000000" data-wa="Hi Avish, I'd like to book a taxi from [location] to [destination] on [date]." target="_blank" rel="noopener"><svg class="icon"><use href="#i-wa"/></svg>Book Now</a>
+        <a class="btn btn-wa btn-sm" href="https://wa.me/94770000000" data-wa="Hi Avishka, I'd like to book a taxi from [location] to [destination] on [date]." data-book="taxi" target="_blank" rel="noopener"><svg class="icon"><use href="#i-wa"/></svg>Book Now</a>
       </article>
 
       <article class="card service reveal d2">
@@ -1109,7 +1167,7 @@ section{position:relative}
           <li><svg class="icon"><use href="#i-check"/></svg>Safari jeeps &amp; tickets arranged</li>
           <li><svg class="icon"><use href="#i-check"/></svg>Local tips along the way</li>
         </ul>
-        <a class="btn btn-wa btn-sm" href="https://wa.me/94770000000" data-wa="Hi Avish, I'd like to book a day tour to [place] from [location] on [date]." target="_blank" rel="noopener"><svg class="icon"><use href="#i-wa"/></svg>Book Now</a>
+        <a class="btn btn-wa btn-sm" href="https://wa.me/94770000000" data-wa="Hi Avishka, I'd like to book a day tour to [place] from [location] on [date]." data-book="tour" target="_blank" rel="noopener"><svg class="icon"><use href="#i-wa"/></svg>Book Now</a>
       </article>
 
       <article class="card service reveal">
@@ -1121,7 +1179,7 @@ section{position:relative}
           <li><svg class="icon"><use href="#i-check"/></svg>Hotel suggestions for every budget</li>
           <li><svg class="icon"><use href="#i-check"/></svg>One clear all-in quote</li>
         </ul>
-        <a class="btn btn-wa btn-sm" href="https://wa.me/94770000000" data-wa="Hi Avish, I'd like a quote for a [number]-day tour starting [date] from [location]. We'd like to visit [places]." target="_blank" rel="noopener"><svg class="icon"><use href="#i-wa"/></svg>Plan My Tour</a>
+        <a class="btn btn-wa btn-sm" href="https://wa.me/94770000000" data-wa="Hi Avishka, I'd like a quote for a [number]-day tour starting [date] from [location]. We'd like to visit [places]." data-book="roundtour" target="_blank" rel="noopener"><svg class="icon"><use href="#i-wa"/></svg>Plan My Tour</a>
       </article>
 
       <article class="card service reveal d1">
@@ -1133,7 +1191,7 @@ section{position:relative}
           <li><svg class="icon"><use href="#i-check"/></svg>Early-morning departures</li>
           <li><svg class="icon"><use href="#i-check"/></svg>Help with luggage, always</li>
         </ul>
-        <a class="btn btn-wa btn-sm" href="https://wa.me/94770000000" data-wa="Hi Avish, I'd like a pick-up from [hotel / villa] to [destination] on [date] at [time]." target="_blank" rel="noopener"><svg class="icon"><use href="#i-wa"/></svg>Book Now</a>
+        <a class="btn btn-wa btn-sm" href="https://wa.me/94770000000" data-wa="Hi Avishka, I'd like a pick-up from [hotel / villa] to [destination] on [date] at [time]." data-book="hotel" target="_blank" rel="noopener"><svg class="icon"><use href="#i-wa"/></svg>Book Now</a>
       </article>
 
       <article class="card service reveal d2">
@@ -1145,7 +1203,7 @@ section{position:relative}
           <li><svg class="icon"><use href="#i-check"/></svg>Your pace, your stops</li>
           <li><svg class="icon"><use href="#i-check"/></svg>Surfboards welcome (ask first)</li>
         </ul>
-        <a class="btn btn-wa btn-sm" href="https://wa.me/94770000000" data-wa="Hi Avish, I'd like to hire a car and driver for [half / full] day on [date], starting from [location]." target="_blank" rel="noopener"><svg class="icon"><use href="#i-wa"/></svg>Book Now</a>
+        <a class="btn btn-wa btn-sm" href="https://wa.me/94770000000" data-wa="Hi Avishka, I'd like to hire a car and driver for [half / full] day on [date], starting from [location]." data-book="hourly" target="_blank" rel="noopener"><svg class="icon"><use href="#i-wa"/></svg>Book Now</a>
       </article>
     </div>
   </div>
@@ -1172,49 +1230,49 @@ section{position:relative}
             <div class="route" role="cell"><b>Colombo Airport (CMB) <svg class="icon arrow"><use href="#i-arrow"/></svg> Tangalle</b><span><svg class="icon"><use href="#i-clock"/></svg>≈ 3 hrs via expressway</span></div>
             <div class="amt" role="cell"><small>Car from</small><span class="cur">LKR</span> 24,000</div>
             <div class="amt" role="cell"><small>Van from</small><span class="cur">LKR</span> 30,000</div>
-            <div role="cell"><a class="btn btn-outline" href="https://wa.me/94770000000" data-wa="Hi Avish, I'd like to book a taxi from Colombo Airport (CMB) to Tangalle on [date]. Flight number: [flight]. Passengers: [number]." target="_blank" rel="noopener">Book</a></div>
+            <div role="cell"><a class="btn btn-outline" href="https://wa.me/94770000000" data-wa="Hi Avishka, I'd like to book a taxi from Colombo Airport (CMB) to Tangalle on [date]. Flight number: [flight]. Passengers: [number]." data-book="route" data-from="Colombo Airport (CMB)" data-to="Tangalle" target="_blank" rel="noopener">Book</a></div>
           </div>
           <div class="price-row" role="row">
             <div class="route" role="cell"><b>Mattala Airport (HRI) <svg class="icon arrow"><use href="#i-arrow"/></svg> Tangalle</b><span><svg class="icon"><use href="#i-clock"/></svg>≈ 1 hr</span></div>
             <div class="amt" role="cell"><small>Car from</small><span class="cur">LKR</span> 9,000</div>
             <div class="amt" role="cell"><small>Van from</small><span class="cur">LKR</span> 12,000</div>
-            <div role="cell"><a class="btn btn-outline" href="https://wa.me/94770000000" data-wa="Hi Avish, I'd like to book a taxi from Mattala Airport (HRI) to Tangalle on [date]. Passengers: [number]." target="_blank" rel="noopener">Book</a></div>
+            <div role="cell"><a class="btn btn-outline" href="https://wa.me/94770000000" data-wa="Hi Avishka, I'd like to book a taxi from Mattala Airport (HRI) to Tangalle on [date]. Passengers: [number]." data-book="route" data-from="Mattala Airport (HRI)" data-to="Tangalle" target="_blank" rel="noopener">Book</a></div>
           </div>
           <div class="price-row" role="row">
             <div class="route" role="cell"><b>Tangalle <svg class="icon arrow"><use href="#i-arrow"/></svg> Galle Fort</b><span><svg class="icon"><use href="#i-clock"/></svg>≈ 1 hr 30 min</span></div>
             <div class="amt" role="cell"><small>Car from</small><span class="cur">LKR</span> 10,500</div>
             <div class="amt" role="cell"><small>Van from</small><span class="cur">LKR</span> 13,500</div>
-            <div role="cell"><a class="btn btn-outline" href="https://wa.me/94770000000" data-wa="Hi Avish, I'd like to book a taxi from Tangalle to Galle on [date]. Passengers: [number]." target="_blank" rel="noopener">Book</a></div>
+            <div role="cell"><a class="btn btn-outline" href="https://wa.me/94770000000" data-wa="Hi Avishka, I'd like to book a taxi from Tangalle to Galle on [date]. Passengers: [number]." data-book="route" data-from="Tangalle" data-to="Galle" target="_blank" rel="noopener">Book</a></div>
           </div>
           <div class="price-row" role="row">
             <div class="route" role="cell"><b>Tangalle <svg class="icon arrow"><use href="#i-arrow"/></svg> Mirissa</b><span><svg class="icon"><use href="#i-clock"/></svg>≈ 1 hr</span></div>
             <div class="amt" role="cell"><small>Car from</small><span class="cur">LKR</span> 7,500</div>
             <div class="amt" role="cell"><small>Van from</small><span class="cur">LKR</span> 10,500</div>
-            <div role="cell"><a class="btn btn-outline" href="https://wa.me/94770000000" data-wa="Hi Avish, I'd like to book a taxi from Tangalle to Mirissa on [date]. Passengers: [number]." target="_blank" rel="noopener">Book</a></div>
+            <div role="cell"><a class="btn btn-outline" href="https://wa.me/94770000000" data-wa="Hi Avishka, I'd like to book a taxi from Tangalle to Mirissa on [date]. Passengers: [number]." data-book="route" data-from="Tangalle" data-to="Mirissa" target="_blank" rel="noopener">Book</a></div>
           </div>
           <div class="price-row" role="row">
             <div class="route" role="cell"><b>Tangalle <svg class="icon arrow"><use href="#i-arrow"/></svg> Weligama</b><span><svg class="icon"><use href="#i-clock"/></svg>≈ 1 hr 15 min</span></div>
             <div class="amt" role="cell"><small>Car from</small><span class="cur">LKR</span> 9,000</div>
             <div class="amt" role="cell"><small>Van from</small><span class="cur">LKR</span> 12,000</div>
-            <div role="cell"><a class="btn btn-outline" href="https://wa.me/94770000000" data-wa="Hi Avish, I'd like to book a taxi from Tangalle to Weligama on [date]. Passengers: [number]." target="_blank" rel="noopener">Book</a></div>
+            <div role="cell"><a class="btn btn-outline" href="https://wa.me/94770000000" data-wa="Hi Avishka, I'd like to book a taxi from Tangalle to Weligama on [date]. Passengers: [number]." data-book="route" data-from="Tangalle" data-to="Weligama" target="_blank" rel="noopener">Book</a></div>
           </div>
           <div class="price-row" role="row">
             <div class="route" role="cell"><b>Tangalle <svg class="icon arrow"><use href="#i-arrow"/></svg> Yala / Tissamaharama</b><span><svg class="icon"><use href="#i-clock"/></svg>≈ 1 hr 45 min</span></div>
             <div class="amt" role="cell"><small>Car from</small><span class="cur">LKR</span> 13,500</div>
             <div class="amt" role="cell"><small>Van from</small><span class="cur">LKR</span> 16,500</div>
-            <div role="cell"><a class="btn btn-outline" href="https://wa.me/94770000000" data-wa="Hi Avish, I'd like to book a taxi from Tangalle to Yala / Tissamaharama on [date]. Passengers: [number]." target="_blank" rel="noopener">Book</a></div>
+            <div role="cell"><a class="btn btn-outline" href="https://wa.me/94770000000" data-wa="Hi Avishka, I'd like to book a taxi from Tangalle to Yala / Tissamaharama on [date]. Passengers: [number]." data-book="route" data-from="Tangalle" data-to="Yala / Tissamaharama" target="_blank" rel="noopener">Book</a></div>
           </div>
           <div class="price-row" role="row">
             <div class="route" role="cell"><b>Tangalle <svg class="icon arrow"><use href="#i-arrow"/></svg> Udawalawe</b><span><svg class="icon"><use href="#i-clock"/></svg>≈ 1 hr 45 min</span></div>
             <div class="amt" role="cell"><small>Car from</small><span class="cur">LKR</span> 15,000</div>
             <div class="amt" role="cell"><small>Van from</small><span class="cur">LKR</span> 18,000</div>
-            <div role="cell"><a class="btn btn-outline" href="https://wa.me/94770000000" data-wa="Hi Avish, I'd like to book a taxi from Tangalle to Udawalawe on [date]. Passengers: [number]." target="_blank" rel="noopener">Book</a></div>
+            <div role="cell"><a class="btn btn-outline" href="https://wa.me/94770000000" data-wa="Hi Avishka, I'd like to book a taxi from Tangalle to Udawalawe on [date]. Passengers: [number]." data-book="route" data-from="Tangalle" data-to="Udawalawe" target="_blank" rel="noopener">Book</a></div>
           </div>
           <div class="price-row" role="row">
             <div class="route" role="cell"><b>Tangalle <svg class="icon arrow"><use href="#i-arrow"/></svg> Ella</b><span><svg class="icon"><use href="#i-clock"/></svg>≈ 3 hrs</span></div>
             <div class="amt" role="cell"><small>Car from</small><span class="cur">LKR</span> 22,500</div>
             <div class="amt" role="cell"><small>Van from</small><span class="cur">LKR</span> 27,000</div>
-            <div role="cell"><a class="btn btn-outline" href="https://wa.me/94770000000" data-wa="Hi Avish, I'd like to book a taxi from Tangalle to Ella on [date]. Passengers: [number]." target="_blank" rel="noopener">Book</a></div>
+            <div role="cell"><a class="btn btn-outline" href="https://wa.me/94770000000" data-wa="Hi Avishka, I'd like to book a taxi from Tangalle to Ella on [date]. Passengers: [number]." data-book="route" data-from="Tangalle" data-to="Ella" target="_blank" rel="noopener">Book</a></div>
           </div>
         </div>
 
@@ -1261,7 +1319,7 @@ section{position:relative}
           <h3>Yala Safari</h3>
           <p>Sri Lanka's most famous national park, home to leopards, elephants, crocodiles and sloth bears. Early start for the best sightings.</p>
           <div class="tour-meta"><span><svg class="icon"><use href="#i-clock"/></svg>Full or half day</span><span><svg class="icon"><use href="#i-route"/></svg>≈ 1 hr 45 min away</span></div>
-          <a class="btn btn-outline btn-block" href="https://wa.me/94770000000" data-wa="Hi Avish, I'd like to book a Yala safari day tour from [location] on [date] for [number] people." target="_blank" rel="noopener">Ask about this tour</a>
+          <a class="btn btn-outline btn-block" href="https://wa.me/94770000000" data-wa="Hi Avishka, I'd like to book a Yala safari day tour from [location] on [date] for [number] people." data-book="tour" data-tour="Yala safari" target="_blank" rel="noopener">Ask about this tour</a>
         </div>
       </article>
 
@@ -1278,7 +1336,7 @@ section{position:relative}
           <h3>Udawalawe Elephants</h3>
           <p>Wide open plains with large herds of wild elephants, plus an optional stop at the Elephant Transit Home feeding time.</p>
           <div class="tour-meta"><span><svg class="icon"><use href="#i-clock"/></svg>Full day</span><span><svg class="icon"><use href="#i-route"/></svg>≈ 1 hr 45 min away</span></div>
-          <a class="btn btn-outline btn-block" href="https://wa.me/94770000000" data-wa="Hi Avish, I'd like to book an Udawalawe safari day tour from [location] on [date] for [number] people." target="_blank" rel="noopener">Ask about this tour</a>
+          <a class="btn btn-outline btn-block" href="https://wa.me/94770000000" data-wa="Hi Avishka, I'd like to book an Udawalawe safari day tour from [location] on [date] for [number] people." data-book="tour" data-tour="Udawalawe elephant safari" target="_blank" rel="noopener">Ask about this tour</a>
         </div>
       </article>
 
@@ -1295,7 +1353,7 @@ section{position:relative}
           <h3>Galle Fort &amp; Coast</h3>
           <p>Wander the UNESCO-listed fort's ramparts and cafés, with stops for stilt fishermen, a turtle hatchery and a beach on the way.</p>
           <div class="tour-meta"><span><svg class="icon"><use href="#i-clock"/></svg>Full day</span><span><svg class="icon"><use href="#i-route"/></svg>≈ 1 hr 30 min away</span></div>
-          <a class="btn btn-outline btn-block" href="https://wa.me/94770000000" data-wa="Hi Avish, I'd like to book a Galle Fort day tour from [location] on [date] for [number] people." target="_blank" rel="noopener">Ask about this tour</a>
+          <a class="btn btn-outline btn-block" href="https://wa.me/94770000000" data-wa="Hi Avishka, I'd like to book a Galle Fort day tour from [location] on [date] for [number] people." data-book="tour" data-tour="Galle Fort &amp; coast" target="_blank" rel="noopener">Ask about this tour</a>
         </div>
       </article>
 
@@ -1312,7 +1370,7 @@ section{position:relative}
           <h3>Mirissa Whale Watching</h3>
           <p>Early pickup for a morning boat trip to spot blue whales and dolphins, then breakfast by the beach. Best from November to April.</p>
           <div class="tour-meta"><span><svg class="icon"><use href="#i-clock"/></svg>Half day</span><span><svg class="icon"><use href="#i-route"/></svg>≈ 1 hr away</span></div>
-          <a class="btn btn-outline btn-block" href="https://wa.me/94770000000" data-wa="Hi Avish, I'd like to book a Mirissa whale watching trip from [location] on [date] for [number] people." target="_blank" rel="noopener">Ask about this tour</a>
+          <a class="btn btn-outline btn-block" href="https://wa.me/94770000000" data-wa="Hi Avishka, I'd like to book a Mirissa whale watching trip from [location] on [date] for [number] people." data-book="tour" data-tour="Mirissa whale watching" target="_blank" rel="noopener">Ask about this tour</a>
         </div>
       </article>
 
@@ -1329,7 +1387,7 @@ section{position:relative}
           <h3>Hiriketiya &amp; Hidden Bays</h3>
           <p>Horseshoe-shaped Hiriketiya, Silent Beach and Goyambokka, and Rekawa beach at night, where sea turtles come ashore to nest.</p>
           <div class="tour-meta"><span><svg class="icon"><use href="#i-clock"/></svg>Half or full day</span><span><svg class="icon"><use href="#i-route"/></svg>Close to Tangalle</span></div>
-          <a class="btn btn-outline btn-block" href="https://wa.me/94770000000" data-wa="Hi Avish, I'd like to book a beach-hopping tour (Hiriketiya and nearby bays) from [location] on [date] for [number] people." target="_blank" rel="noopener">Ask about this tour</a>
+          <a class="btn btn-outline btn-block" href="https://wa.me/94770000000" data-wa="Hi Avishka, I'd like to book a beach-hopping tour (Hiriketiya and nearby bays) from [location] on [date] for [number] people." data-book="tour" data-tour="Hiriketiya &amp; hidden bays (beach hopping)" target="_blank" rel="noopener">Ask about this tour</a>
         </div>
       </article>
 
@@ -1346,7 +1404,7 @@ section{position:relative}
           <h3>Mulkirigala &amp; Hummanaya</h3>
           <p>Climb to the ancient Mulkirigala rock temple, then watch the sea erupt at Hummanaya, one of the largest blowholes in the world.</p>
           <div class="tour-meta"><span><svg class="icon"><use href="#i-clock"/></svg>Half day</span><span><svg class="icon"><use href="#i-route"/></svg>Close to Tangalle</span></div>
-          <a class="btn btn-outline btn-block" href="https://wa.me/94770000000" data-wa="Hi Avish, I'd like to book the Mulkirigala and Hummanaya blowhole tour from [location] on [date] for [number] people." target="_blank" rel="noopener">Ask about this tour</a>
+          <a class="btn btn-outline btn-block" href="https://wa.me/94770000000" data-wa="Hi Avishka, I'd like to book the Mulkirigala and Hummanaya blowhole tour from [location] on [date] for [number] people." data-book="tour" data-tour="Mulkirigala rock temple &amp; Hummanaya blowhole" target="_blank" rel="noopener">Ask about this tour</a>
         </div>
       </article>
     </div>
@@ -1359,7 +1417,7 @@ section{position:relative}
         <ul class="stops" aria-label="Popular stops">
           <li>Ella</li><li>Nuwara Eliya</li><li>Kandy</li><li>Sigiriya</li><li>Dambulla</li><li>Galle</li><li>Yala</li><li>Arugam Bay</li>
         </ul>
-        <a class="btn btn-wa" href="https://wa.me/94770000000" data-wa="Hi Avish, I'd like a quote for a [number]-day round tour starting [date] from [location]. We'd like to visit [places]." target="_blank" rel="noopener"><svg class="icon"><use href="#i-wa"/></svg>Plan my round tour</a>
+        <a class="btn btn-wa" href="https://wa.me/94770000000" data-wa="Hi Avishka, I'd like a quote for a [number]-day round tour starting [date] from [location]. We'd like to visit [places]." data-book="roundtour" target="_blank" rel="noopener"><svg class="icon"><use href="#i-wa"/></svg>Plan my round tour</a>
       </div>
       <div class="art">
         <picture>
@@ -1469,7 +1527,7 @@ section{position:relative}
             <li><svg class="icon"><use href="#i-snow"/></svg>Air-conditioned</li>
             <li><svg class="icon"><use href="#i-route"/></svg>Quiet &amp; smooth</li>
           </ul>
-          <a class="btn btn-outline btn-block" href="https://wa.me/94770000000" data-wa="Hi Avish, I'd like to book a sedan from [location] to [destination] on [date]." target="_blank" rel="noopener">Book a sedan</a>
+          <a class="btn btn-outline btn-block" href="https://wa.me/94770000000" data-wa="Hi Avishka, I'd like to book a sedan from [location] to [destination] on [date]." data-book="taxi" data-vehicle="Sedan" target="_blank" rel="noopener">Book a sedan</a>
         </div>
       </article>
 
@@ -1490,7 +1548,7 @@ section{position:relative}
             <li><svg class="icon"><use href="#i-snow"/></svg>Air-conditioned</li>
             <li><svg class="icon"><use href="#i-mountain"/></svg>Great for hill country</li>
           </ul>
-          <a class="btn btn-outline btn-block" href="https://wa.me/94770000000" data-wa="Hi Avish, I'd like to book an SUV from [location] to [destination] on [date]." target="_blank" rel="noopener">Book an SUV</a>
+          <a class="btn btn-outline btn-block" href="https://wa.me/94770000000" data-wa="Hi Avishka, I'd like to book an SUV from [location] to [destination] on [date]." data-book="taxi" data-vehicle="SUV" target="_blank" rel="noopener">Book an SUV</a>
         </div>
       </article>
 
@@ -1511,7 +1569,7 @@ section{position:relative}
             <li><svg class="icon"><use href="#i-snow"/></svg>Air-conditioned</li>
             <li><svg class="icon"><use href="#i-waves"/></svg>Surfboards OK</li>
           </ul>
-          <a class="btn btn-outline btn-block" href="https://wa.me/94770000000" data-wa="Hi Avish, I'd like to book a van for [number] people from [location] to [destination] on [date]." target="_blank" rel="noopener">Book a van</a>
+          <a class="btn btn-outline btn-block" href="https://wa.me/94770000000" data-wa="Hi Avishka, I'd like to book a van for [number] people from [location] to [destination] on [date]." data-book="taxi" data-vehicle="Van" target="_blank" rel="noopener">Book a van</a>
         </div>
       </article>
     </div>
@@ -1550,31 +1608,31 @@ section{position:relative}
 </section>
 
 <!-- ============ About ============ -->
-<!-- EDIT: personalise this story so it's true to Avish -->
+<!-- EDIT: personalise this story so it's true to Avishka -->
 <section class="section" id="about" aria-labelledby="about-title">
   <div class="wrap about">
     <div class="portrait reveal" id="portrait">
-      <!-- Set CONFIG.driverPhoto to a real photo of Avish (e.g. "images/avish.jpg") to replace this beach photo -->
+      <!-- Set CONFIG.driverPhoto to a real photo of Avishka (e.g. "images/avishka.jpg") to replace this beach photo -->
       <picture class="ph">
         <source type="image/avif" srcset="images/tangalle-beach-800.avif 800w, images/tangalle-beach-1200.avif 1200w, images/tangalle-beach-1600.avif 1600w" sizes="(max-width:900px) 100vw, 480px">
         <source type="image/webp" srcset="images/tangalle-beach-800.webp 800w, images/tangalle-beach-1200.webp 1200w, images/tangalle-beach-1600.webp 1600w" sizes="(max-width:900px) 100vw, 480px">
-        <img src="images/tangalle-beach-1200.jpg" alt="Golden sunset over the sea at Tangalle beach, Avish&#39;s home town" width="1600" height="1060" loading="lazy" decoding="async">
+        <img src="images/tangalle-beach-1200.jpg" alt="Golden sunset over the sea at Tangalle beach, Avishka&#39;s home town" width="1600" height="1060" loading="lazy" decoding="async">
       </picture>
       <div class="stamp"><svg class="icon"><use href="#i-pin"/></svg><div><b>Tangalle, Southern Province</b><span>Your local driver &amp; guide</span></div></div>
     </div>
 
     <div class="about-txt reveal d1">
       <span class="eyebrow">Meet your driver</span>
-      <h2 id="about-title">Hi, I'm Avish, your local Tangalle driver and guide</h2>
+      <h2 id="about-title">Hi, I'm Avishka, your local Tangalle driver and guide</h2>
       <p>Tangalle is my home, and showing it to visitors is my favourite part of the job. When you ride with me, you're not just getting a taxi. You're getting someone who knows which beach is calm today, where to find the freshest seafood, and the safest way through every road on the south coast.</p>
       <p>I keep my service personal on purpose. I answer my own WhatsApp, I plan every trip myself, and I treat every guest like family visiting from abroad. Your safety, comfort and peace of mind come first, from the moment I meet you at arrivals to the last goodbye.</p>
-      <p class="sign">— Avish</p>
+      <p class="sign">— Avishka</p>
       <ul class="facts">
         <li><svg class="icon"><use href="#i-globe"/></svg><b>English &amp; Sinhala</b><span>Languages spoken</span></li>
         <li><svg class="icon"><use href="#i-clock"/></svg><b>24 / 7</b><span>Any hour, any flight</span></li>
         <li><svg class="icon"><use href="#i-map"/></svg><b>Island-wide</b><span>South coast specialist</span></li>
       </ul>
-      <a class="btn btn-wa" href="https://wa.me/94770000000" data-wa="Hi Avish! I found your website and I'd like to ask about a trip from [location] to [destination] on [date]." target="_blank" rel="noopener"><svg class="icon"><use href="#i-wa"/></svg>Say hello on WhatsApp</a>
+      <a class="btn btn-wa" href="https://wa.me/94770000000" data-wa="Hi Avishka! I found your website and I'd like to ask about a trip from [location] to [destination] on [date]." data-book="hello" target="_blank" rel="noopener"><svg class="icon"><use href="#i-wa"/></svg>Say hello on WhatsApp</a>
     </div>
   </div>
 </section>
@@ -1638,7 +1696,7 @@ section{position:relative}
 
     <div class="contact">
       <div class="contact-side reveal">
-        <a class="wa-big" href="https://wa.me/94770000000" data-wa="Hi Avish, I'd like to book a taxi from [location] to [destination] on [date]." target="_blank" rel="noopener">
+        <a class="wa-big" href="https://wa.me/94770000000" data-wa="Hi Avishka, I'd like to book a taxi from [location] to [destination] on [date]." data-book="taxi" target="_blank" rel="noopener">
           <span class="ic"><svg class="icon"><use href="#i-wa"/></svg></span>
           <span><b>Chat on WhatsApp</b><span>Usually replies within minutes</span></span>
           <svg class="icon go"><use href="#i-arrow"/></svg>
@@ -1687,7 +1745,7 @@ section{position:relative}
         <p>Send your flight number and you're done. We'll be waiting at arrivals.</p>
       </div>
       <div class="btns">
-        <a class="btn btn-wa btn-lg" href="https://wa.me/94770000000" data-wa="Hi Avish, I'd like to book an airport pickup from Colombo Airport (CMB) to [destination] on [date]. Flight number: [flight]." target="_blank" rel="noopener"><svg class="icon"><use href="#i-wa"/></svg>Book airport pickup</a>
+        <a class="btn btn-wa btn-lg" href="https://wa.me/94770000000" data-wa="Hi Avishka, I'd like to book an airport pickup from Colombo Airport (CMB) to [destination] on [date]. Flight number: [flight]." data-book="airport" data-from="Colombo Airport (CMB)" target="_blank" rel="noopener"><svg class="icon"><use href="#i-wa"/></svg>Book airport pickup</a>
       </div>
     </div>
   </div>
@@ -1705,7 +1763,7 @@ section{position:relative}
         </a>
         <p>Safe, reliable and friendly taxi, airport transfer and private tour service from Tangalle, covering the south coast and the whole island.</p>
         <div class="socials" id="socials">
-          <a href="https://wa.me/94770000000" data-wa="Hi Avish!" target="_blank" rel="noopener" aria-label="WhatsApp"><svg class="icon"><use href="#i-wa"/></svg></a>
+          <a href="https://wa.me/94770000000" data-wa="Hi Avishka!" data-book="hello" target="_blank" rel="noopener" aria-label="WhatsApp"><svg class="icon"><use href="#i-wa"/></svg></a>
           <a href="#" data-social="facebook" target="_blank" rel="noopener" aria-label="Facebook" hidden><svg class="icon"><use href="#i-fb"/></svg></a>
           <a href="#" data-social="instagram" target="_blank" rel="noopener" aria-label="Instagram" hidden><svg class="icon"><use href="#i-ig"/></svg></a>
           <a href="mailto:your-email@example.com" data-mail aria-label="Email"><svg class="icon"><use href="#i-mail"/></svg></a>
@@ -1750,6 +1808,31 @@ section{position:relative}
   </div>
 </footer>
 
+<dialog class="bk" id="bk" aria-labelledby="bk-title">
+  <form class="bk-form" id="bk-form" novalidate>
+    <header class="bk-head">
+      <div>
+        <p class="bk-kicker" id="bk-kicker">Booking request</p>
+        <h2 id="bk-title">Book a taxi</h2>
+      </div>
+      <button class="bk-x" type="button" data-bk-close aria-label="Close"><svg class="icon"><use href="#i-x"/></svg></button>
+    </header>
+    <div class="bk-body">
+      <p class="bk-intro" id="bk-intro">A few quick details and we'll write the WhatsApp message for you.</p>
+      <div class="bk-fields" id="bk-fields"></div>
+      <details class="bk-preview" open>
+        <summary>Your WhatsApp message</summary>
+        <pre id="bk-msg" aria-live="polite"></pre>
+      </details>
+    </div>
+    <footer class="bk-foot">
+      <p class="bk-err" id="bk-err" role="alert"></p>
+      <button class="btn btn-wa btn-block btn-lg" type="submit"><svg class="icon"><use href="#i-wa"/></svg>Send on WhatsApp</button>
+      <p class="bk-note">Opens WhatsApp with your message ready. Just press send.</p>
+    </footer>
+  </form>
+</dialog>
+
 <dialog class="lightbox" id="lightbox" aria-label="Photo viewer">
   <figure><img id="lb-img" alt="" decoding="async"><figcaption id="lb-cap"></figcaption></figure>
   <button class="lb-btn lb-close" type="button" aria-label="Close"><svg class="icon"><use href="#i-x"/></svg></button>
@@ -1759,10 +1842,10 @@ section{position:relative}
 
 <nav class="mbar" id="mbar" aria-label="Quick booking">
   <a class="btn btn-outline" href="tel:+94770000000" data-tel><svg class="icon"><use href="#i-phone"/></svg>Call</a>
-  <a class="btn btn-wa" href="https://wa.me/94770000000" data-wa="Hi Avish, I'd like to book a taxi from [location] to [destination] on [date]." target="_blank" rel="noopener"><svg class="icon"><use href="#i-wa"/></svg>Book on WhatsApp</a>
+  <a class="btn btn-wa" href="https://wa.me/94770000000" data-wa="Hi Avishka, I'd like to book a taxi from [location] to [destination] on [date]." data-book="taxi" target="_blank" rel="noopener"><svg class="icon"><use href="#i-wa"/></svg>Book on WhatsApp</a>
 </nav>
 
-<a class="fab" id="fab" href="https://wa.me/94770000000" data-wa="Hi Avish, I'd like to book a taxi from [location] to [destination] on [date]." target="_blank" rel="noopener" aria-label="Book on WhatsApp">
+<a class="fab" id="fab" href="https://wa.me/94770000000" data-wa="Hi Avishka, I'd like to book a taxi from [location] to [destination] on [date]." data-book="taxi" target="_blank" rel="noopener" aria-label="Book on WhatsApp">
   <svg class="icon"><use href="#i-wa"/></svg><span class="label">Book on WhatsApp</span>
 </a>
 
@@ -1771,7 +1854,7 @@ section{position:relative}
    CONFIG: edit these values. Everything on the page updates from here.
    ========================================================= */
 const CONFIG = {
-  driverName: "Avish",
+  driverName: "Avishka",
   whatsapp: "94770000000",            // EDIT: country code + number, digits only (no +, no spaces)
   phoneDisplay: "+94 77 000 0000",    // EDIT: how the number is shown on the page
   email: "your-email@example.com",    // EDIT
@@ -1780,7 +1863,7 @@ const CONFIG = {
   writeReviewUrl: "",                 // OPTIONAL: your Google "write a review" link (g.page/r/…/review)
   facebook: "",                       // OPTIONAL: full URL, shows the icon when set
   instagram: "",                      // OPTIONAL: full URL, shows the icon when set
-  driverPhoto: "",                    // OPTIONAL: e.g. "images/avish.jpg" replaces the portrait illustration
+  driverPhoto: "",                    // OPTIONAL: e.g. "images/avishka.jpg" replaces the portrait illustration
 
   /* Real guest reviews only. Copy them from Google / TripAdvisor / WhatsApp with permission. Example format:
      { name: "First name L.", country: "United Kingdom", rating: 5, text: "What they wrote…", source: "Google" } */
@@ -1837,6 +1920,181 @@ const CONFIG = {
     let x0 = null;
     lb.addEventListener("touchstart", e => { x0 = e.touches[0].clientX; }, { passive: true });
     lb.addEventListener("touchend", e => { if (x0 === null) return; const dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 50) showShot(cur + (dx < 0 ? 1 : -1)); x0 = null; });
+  }
+
+  /* ---- Booking request forms: every WhatsApp button opens a short form, builds the message, then opens WhatsApp ---- */
+  const PLACES = ["Ella", "Nuwara Eliya", "Kandy", "Sigiriya", "Dambulla", "Galle", "Mirissa", "Yala", "Udawalawe", "Arugam Bay"];
+  const TOURS = ["Yala safari", "Udawalawe elephant safari", "Galle Fort & coast", "Mirissa whale watching", "Hiriketiya & hidden bays (beach hopping)", "Mulkirigala rock temple & Hummanaya blowhole", "Something else"];
+  const VEHICLES = ["No preference", "Sedan (1–3)", "SUV (1–4)", "Van (4–8)"];
+  const F = {
+    name: { label: "Your name", type: "text", req: 1, auto: "name", ph: "e.g. Sarah", full: 0 },
+    pax: { label: "Passengers", type: "stepper", min: 1, max: 14, val: 2 },
+    date: { label: "Date", type: "date", req: 1 },
+    time: { label: "Pickup time", type: "time" },
+    vehicle: { label: "Vehicle", type: "select", opts: VEHICLES, full: 1 },
+    bags: { label: "Large bags", type: "stepper", min: 0, max: 12, val: 2 },
+    notes: { label: "Anything else?", type: "textarea", ph: "Child seats, surfboards, stops on the way…", full: 1 }
+  };
+  const FORMS = {
+    taxi: { kicker: "Private taxi", title: "Book a taxi", lead: "I'd like to book a private taxi.",
+      fields: [["pickup", { label: "Pickup location", type: "text", req: 1, ph: "Hotel, villa or address", full: 1 }],
+               ["dest", { label: "Destination", type: "text", req: 1, ph: "e.g. Galle Fort", full: 1 }], "date", "time", "pax", "bags", "vehicle", "name", "notes"] },
+    route: { kicker: "Fixed-price route", title: "Book this route", lead: "I'd like to book a taxi.",
+      fields: [["from", { label: "From", type: "text", req: 1 }], ["to", { label: "To", type: "text", req: 1 }],
+               ["exact", { label: "Exact pickup point", type: "text", ph: "Hotel name or address (optional)", full: 1 }],
+               "date", "time", ["flight", { label: "Flight number", type: "text", ph: "e.g. UL 504", when: d => /airport/i.test(d.from || "") }],
+               "pax", "bags", ["veh2", { label: "Vehicle", type: "seg", opts: ["Car (1–3)", "Van (4–8)"], full: 1 }], "name", "notes"] },
+    airport: { kicker: "Airport transfer", title: "Airport transfer", lead: "I'd like to book an airport transfer.",
+      fields: [["dir", { label: "Trip", type: "seg", opts: ["Pickup from the airport", "Drop-off at the airport"], full: 1 }],
+               ["airport", { label: "Airport", type: "seg", opts: ["Colombo (CMB)", "Mattala (HRI)"], full: 1 }],
+               ["place", { label: "Hotel / address", type: "text", req: 1, ph: "Where in Tangalle or the south coast?", full: 1 }],
+               "date", ["time", { label: "Landing / pickup time", type: "time" }], ["flight", { label: "Flight number", type: "text", ph: "e.g. UL 504" }],
+               "pax", "bags", "vehicle", "name", "notes"] },
+    tour: { kicker: "Day tour", title: "Book a day tour", lead: "I'd like to book a day tour.",
+      fields: [["tour", { label: "Tour", type: "select", opts: TOURS, full: 1 }],
+               ["pickup", { label: "Pickup hotel / location", type: "text", req: 1, ph: "e.g. hotel in Tangalle", full: 1 }],
+               "date", ["start", { label: "Start", type: "select", opts: ["Early morning (best for safaris)", "Morning", "Flexible"] }],
+               ["pax", { label: "People", type: "stepper", min: 1, max: 14, val: 2 }], "name", "notes"] },
+    roundtour: { kicker: "Multi-day round tour", title: "Plan my round tour", lead: "I'd like a quote for a multi-day round tour.",
+      fields: [["date", { label: "Start date", type: "date", req: 1 }], ["days", { label: "Number of days", type: "stepper", min: 2, max: 30, val: 5 }],
+               ["origin", { label: "Starting from", type: "text", req: 1, ph: "e.g. Colombo Airport or Tangalle", full: 1 }],
+               ["places", { label: "Places you'd like to visit", type: "chips", opts: PLACES, full: 1 }],
+               ["pax", { label: "Travellers", type: "stepper", min: 1, max: 14, val: 2 }],
+               ["hotels", { label: "Hotels", type: "select", opts: ["Please suggest hotels", "Already booked", "Not sure yet"] }],
+               ["style", { label: "Travel style", type: "seg", opts: ["Budget", "Mid-range", "Luxury"], full: 1, nodef: 1 }], "name", "notes"] },
+    hotel: { kicker: "Hotel & villa pick-up", title: "Hotel / villa pick-up", lead: "I'd like a pick-up from my hotel.",
+      fields: [["pickup", { label: "Hotel / villa name", type: "text", req: 1, full: 1 }], ["dest", { label: "Going to", type: "text", req: 1, ph: "Restaurant, beach, town…", full: 1 }],
+               "date", ["time", { label: "Pickup time", type: "time", req: 1 }], "pax",
+               ["ret", { label: "Return trip", type: "seg", opts: ["One way", "Return trip"], full: 1 }], "name", "notes"] },
+    hourly: { kicker: "Car & driver hire", title: "Hire a car & driver", lead: "I'd like to hire a car and driver.",
+      fields: [["dur", { label: "Duration", type: "seg", opts: ["Half day (≈ 4 hrs)", "Full day (≈ 8 hrs)"], full: 1 }],
+               "date", ["time", { label: "Start time", type: "time" }],
+               ["pickup", { label: "Start from", type: "text", req: 1, ph: "Hotel or address", full: 1 }],
+               ["plan", { label: "Places you'd like to go", type: "textarea", ph: "e.g. Hiriketiya, Dikwella temple, lunch stop", full: 1 }], "pax", "vehicle", "name"] },
+    hello: { kicker: "Question", title: "Ask Avishka", lead: "I found your website and have a question.",
+      fields: [["q", { label: "Your question", type: "textarea", req: 1, ph: "Ask about a trip, a price or anything else", full: 1 }],
+               ["when", { label: "Travel dates (if known)", type: "text", ph: "e.g. 12–20 Dec", full: 1 }], "name"] }
+  };
+
+  const bk = $("#bk"), bkForm = $("#bk-form"), bkFields = $("#bk-fields"), bkMsg = $("#bk-msg"), bkErr = $("#bk-err");
+  let bkDef = null, ctx = {};
+  const esc2 = (v) => String(v == null ? "" : v).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  let savedName = "";
+  try { savedName = localStorage.getItem("avish-name") || ""; } catch (e) {}
+
+  const defs = () => bkDef.fields.map(f => Array.isArray(f) ? [f[0], Object.assign({}, F[f[0]] || {}, f[1])] : [f, F[f]]);
+  const fieldHTML = (id, d, val) => {
+    const fid = "bk-" + id, req = d.req ? ' <span class="req" aria-hidden="true">*</span>' : "";
+    const cls = "field" + (d.full || d.type === "textarea" || d.type === "chips" ? " full" : "");
+    const vis = d.when ? ' data-when="' + id + '"' : "";
+    if (d.type === "seg" || d.type === "chips") {
+      const multi = d.type === "chips";
+      const cur = multi || (d.nodef && !val) ? [] : [val || d.opts[0]];
+      return '<fieldset class="' + cls + '"' + vis + ' style="border:0;padding:0;margin:0"><legend class="lbl">' + d.label + "</legend><div class=\"seg\">" +
+        d.opts.map(o => '<label><input type="' + (multi ? "checkbox" : "radio") + '" name="' + id + '" value="' + esc2(o) + '"' + (cur.includes(o) ? " checked" : "") + "><span>" + esc2(o) + "</span></label>").join("") + "</div></fieldset>";
+    }
+    if (d.type === "stepper") {
+      const v = val != null ? val : d.val;
+      return '<div class="' + cls + ' st"' + vis + '><span class="lbl" id="' + fid + '-l">' + d.label + '</span><div class="stepper" role="group" aria-labelledby="' + fid + '-l">' +
+        '<button type="button" data-step="-1" aria-label="Fewer">−</button><output id="' + fid + '" data-min="' + d.min + '" data-max="' + d.max + '" name="' + id + '">' + v + '</output>' +
+        '<button type="button" data-step="1" aria-label="More">+</button></div></div>';
+    }
+    let input;
+    const common = ' id="' + fid + '" name="' + id + '"' + (d.req ? " required" : "") + (d.ph ? ' placeholder="' + esc2(d.ph) + '"' : "") + (d.auto ? ' autocomplete="' + d.auto + '"' : "");
+    if (d.type === "select") input = "<select" + common + ">" + d.opts.map(o => "<option" + (o === val ? " selected" : "") + ">" + esc2(o) + "</option>").join("") + "</select>";
+    else if (d.type === "textarea") input = "<textarea" + common + ">" + esc2(val || "") + "</textarea>";
+    else input = '<input type="' + d.type + '"' + common + (val ? ' value="' + esc2(val) + '"' : "") + (d.type === "date" ? ' min="' + iso + '"' : "") + ">";
+    return '<div class="' + cls + '"' + vis + '><label for="' + fid + '">' + d.label + req + "</label>" + input + "</div>";
+  };
+
+  const read = () => {
+    const d = {};
+    defs().forEach(([id, def]) => {
+      if (def.type === "stepper") d[id] = $("#bk-" + id).textContent;
+      else if (def.type === "chips") d[id] = $$('input[name="' + id + '"]:checked', bkForm).map(i => i.value);
+      else if (def.type === "seg") { const c = $('input[name="' + id + '"]:checked', bkForm); d[id] = c ? c.value : ""; }
+      else { const el = $("#bk-" + id); d[id] = el ? el.value.trim() : ""; }
+    });
+    return d;
+  };
+
+  const LBL = { pickup: "Pickup", dest: "Destination", from: "From", to: "To", exact: "Pickup point", place: "Hotel / address", tour: "Tour",
+    start: "Start", days: "Days", hotels: "Hotels", style: "Travel style", ret: "Trip", dur: "Duration", plan: "Plans", when: "Travel dates",
+    date: "Date", time: "Time", flight: "Flight", pax: "Passengers", bags: "Large bags", vehicle: "Vehicle", veh2: "Vehicle", dir: "Trip", airport: "Airport", places: "Places" };
+
+  const compose = () => {
+    const d = read(), lines = ["Hi " + CONFIG.driverName + ", " + bkDef.lead, ""];
+    defs().forEach(([id, def]) => {
+      if (["name", "notes", "q"].includes(id)) return;
+      if (def.when && !def.when(d)) return;
+      let v = d[id];
+      if (Array.isArray(v)) v = v.join(", ");
+      if (!v || v === "No preference") return;
+      if (id === "date") v = niceDate(v);
+      lines.push("• " + (id === "pax" || id === "date" ? def.label : (LBL[id] || def.label)) + ": " + v);
+    });
+    if (d.q) lines.push(d.q);
+    if (d.notes) lines.push("", "Notes: " + d.notes);
+    lines.push("", "Name: " + (d.name || "[your name]"));
+    return lines.join("\n");
+  };
+  const update = () => {
+    const d = read();
+    $$("[data-when]", bkFields).forEach(el => { const def = defs().find(x => x[0] === el.dataset.when)[1]; el.hidden = !def.when(d); });
+    bkMsg.textContent = compose();
+  };
+
+  const openBooking = (el) => {
+    const type = FORMS[el.dataset.book] ? el.dataset.book : "taxi";
+    bkDef = FORMS[type];
+    ctx = { from: el.dataset.from || "", to: el.dataset.to || "", tour: el.dataset.tour || "", vehicle: el.dataset.vehicle || "" };
+    $("#bk-kicker").textContent = bkDef.kicker;
+    $("#bk-title").textContent = type === "route" && ctx.from ? ctx.from + " → " + (ctx.to || "") : (type === "tour" && ctx.tour ? ctx.tour : bkDef.title);
+    const init = { from: ctx.from, to: ctx.to, tour: ctx.tour || TOURS[0], name: savedName,
+      vehicle: ctx.vehicle ? VEHICLES.find(v => v.startsWith(ctx.vehicle)) : "", airport: /mattala/i.test(ctx.from) ? "Mattala (HRI)" : "",
+      veh2: ctx.vehicle === "Van" ? "Van (4–8)" : "" };
+    bkFields.innerHTML = defs().map(([id, def]) => fieldHTML(id, def, init[id])).join("");
+    bkErr.textContent = "";
+    update();
+    bk.showModal();
+    const first = $$("input:not([type=radio]):not([type=checkbox]):not([value]), textarea, select", bkFields).find(i => i.required && !i.value);
+    if (first && window.innerWidth > 600) first.focus();
+  };
+
+  if (bk && typeof bk.showModal === "function") {
+    document.addEventListener("click", e => {
+      const el = e.target.closest("[data-book]");
+      if (!el || e.ctrlKey || e.metaKey) return;
+      e.preventDefault();
+      if (!menu.hidden) setMenu(false);
+      openBooking(el);
+    });
+    bkFields.addEventListener("input", e => {
+      if (e.target.value && e.target.value.trim()) e.target.removeAttribute("aria-invalid");
+      if (!$$('[aria-invalid="true"]', bkFields).length) bkErr.textContent = "";
+      update();
+    });
+    bkFields.addEventListener("change", update);
+    bkFields.addEventListener("click", e => {
+      const b = e.target.closest("[data-step]"); if (!b) return;
+      const o = b.parentElement.querySelector("output");
+      o.textContent = Math.min(+o.dataset.max, Math.max(+o.dataset.min, +o.textContent + +b.dataset.step));
+      update();
+    });
+    $$("[data-bk-close]", bk).forEach(b => b.addEventListener("click", () => bk.close()));
+    bk.addEventListener("click", e => { if (e.target === bk) bk.close(); });
+    bkForm.addEventListener("submit", e => {
+      e.preventDefault();
+      let bad = null;
+      $$("[required]", bkFields).forEach(i => { const no = !i.value.trim(); i.setAttribute("aria-invalid", no ? "true" : "false"); if (no && !bad) bad = i; });
+      if (bad) { bkErr.textContent = "Please fill in the fields marked *."; bad.focus(); return; }
+      const d = read();
+      try { if (d.name) localStorage.setItem("avish-name", d.name); savedName = d.name || savedName; } catch (err) {}
+      const url = waUrl(compose());
+      const w = window.open(url, "_blank", "noopener");
+      if (!w) window.location.href = url;
+      bk.close();
+    });
   }
 
   /* ---- Reviews ---- */

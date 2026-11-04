@@ -24,7 +24,7 @@ Open `index.html` and use **Find & Replace (all)** for each of these:
 
 | Find | Replace with |
 |---|---|
-| `94770000000` | Avish's WhatsApp number: country code plus number, digits only (e.g. `94771234567`) |
+| `94770000000` | Avishka's WhatsApp number: country code plus number, digits only (e.g. `94771234567`) |
 | `+94 77 000 0000` | The same number as it should appear on the page |
 | `your-email@example.com` | The booking email address |
 
@@ -33,18 +33,18 @@ Then check the `CONFIG` block near the bottom of `index.html`:
 - `googleReviewsUrl` / `writeReviewUrl`: links to the Google Business profile and its "write a review" page.
 - `facebook`, `instagram`: paste full URLs and the icons appear in the footer. Also add them to `"sameAs"` in the JSON-LD block in `<head>`.
 - `formspreeId`: optional. Create a free form at formspree.io and paste its ID so **Send by email** submits without opening the visitor's email app.
-- `driverPhoto`: add a real photo of Avish (e.g. `images/avish.jpg`). It replaces the beach photo in the "Meet your driver" section. A friendly photo of the driver next to the car builds a lot of trust.
+- `driverPhoto`: add a real photo of Avishka (e.g. `images/avishka.jpg`). It replaces the beach photo in the "Meet your driver" section. A friendly photo of the driver next to the car builds a lot of trust.
 - `reviews`: add **real** guest reviews only, copied with permission from Google, TripAdvisor or WhatsApp.
 
 Prices are shown in **Sri Lankan Rupees (LKR)**. They were converted from the template's sample USD prices at about LKR 300 per US$ and rounded, so set the real fares. Also confirm the **prices**, the **fleet** and the promises in **About** and **FAQ** are true. Prices also appear in the JSON-LD `hasOfferCatalog` in `<head>`; keep both in sync.
 
 ## Photos
 
-All photos are real photographs of Sri Lanka from Wikimedia Commons under Creative Commons / free licences. Each one is credited on `credits.html`. Vehicle photos show the *type* of vehicle; swapping in photos of Avish's own car and van is the single best upgrade. To replace a photo, keep the same file names (`images/sedan.jpg` + `images/sedan.webp`) or update the `<picture>` tags.
+All photos are real photographs of Sri Lanka from Wikimedia Commons under Creative Commons / free licences. Each one is credited on `credits.html`. Vehicle photos show the *type* of vehicle; swapping in photos of Avishka's own car and van is the single best upgrade. To replace a photo, keep the same file names (`images/sedan.jpg` + `images/sedan.webp`) or update the `<picture>` tags.
 
 ## Adding a real video
 
-Short, steady phone clips (5–15 seconds, landscape, filmed by Avish: the car, an airport pickup, the coast road) work far better than stock footage. Send them and they can be compressed and added to the gallery.
+Short, steady phone clips (5–15 seconds, landscape, filmed by Avishka: the car, an airport pickup, the coast road) work far better than stock footage. Send them and they can be compressed and added to the gallery.
 
 ## SEO checklist after launch
 
@@ -61,7 +61,8 @@ Short, steady phone clips (5–15 seconds, landscape, filmed by Avish: the car, 
 - Sharp, steady photos: art-directed hero (portrait crop on phones), 800/1200/1600 px responsive sizes, no zoom effects on touch screens
 - Tap-to-enlarge photo viewer with swipe and arrow-key navigation
 - "Book in 3 steps" section and LKR price table
-- Every "Book" button opens WhatsApp with a pre-filled message; booking form sends by WhatsApp, Formspree or email
+- Every WhatsApp button first opens a short form for that request (airport transfer, route, day tour, round tour, hotel pick-up, car hire, question), shows a live preview of the message, then opens WhatsApp with it ready to send
+- Booking form at the bottom sends by WhatsApp, Formspree or email
 - Light and dark mode
 - SEO: descriptive title and meta description, canonical URL, Open Graph and Twitter cards, `LocalBusiness` + `TaxiService` (LKR offer catalog) + `FAQPage` structured data, geo tags, image sitemap, descriptive alt text on every photo
 - Performance: responsive WebP images with `srcset`, lazy loading below the fold, preloaded hero image, no frameworks

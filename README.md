@@ -18,15 +18,11 @@ It's plain HTML, CSS and JavaScript with no build step. GitHub Pages serves it s
 | `robots.txt`, `sitemap.xml` | Help search engines find and index the site (the sitemap also lists the images) |
 | `.nojekyll` | Tells GitHub Pages to serve the files as they are |
 
-## Before going live: replace the placeholders
+## Contact details
 
-Open `index.html` and use **Find & Replace (all)** for each of these:
+The WhatsApp and phone number **+94 76 562 7939** is already set throughout the site.
 
-| Find | Replace with |
-|---|---|
-| `94770000000` | Avishka's WhatsApp number: country code plus number, digits only (e.g. `94771234567`) |
-| `+94 77 000 0000` | The same number as it should appear on the page |
-| `your-email@example.com` | The booking email address |
+To add a booking email address, set `email` in the `CONFIG` block near the bottom of `index.html`. While it is empty, the email links and the **Send by email** button stay hidden. Also add it as `"email"` in the JSON-LD block in `<head>`.
 
 Then check the `CONFIG` block near the bottom of `index.html`:
 

@@ -32,7 +32,7 @@ Then check the `CONFIG` block near the bottom of `index.html`:
 - `driverPhoto`: add a real photo of Avishka (e.g. `images/avishka.jpg`). It replaces the beach photo in the "Meet your driver" section. A friendly photo of the driver next to the car builds a lot of trust.
 - `reviews`: add **real** guest reviews only, copied with permission from Google, TripAdvisor or WhatsApp.
 
-Prices are shown in **Sri Lankan Rupees (LKR)**. They were converted from the template's sample USD prices at about LKR 300 per US$ and rounded, so set the real fares. Also confirm the **prices**, the **fleet** and the promises in **About** and **FAQ** are true. Prices also appear in the JSON-LD `hasOfferCatalog` in `<head>`; keep both in sync.
+Prices are Avishka's real fares in **Sri Lankan Rupees (LKR)**, per vehicle (car / van or shuttle), with a note that they can be negotiated and may change from day to day. Also confirm the **fleet** and the promises in **About** and **FAQ** are true. Prices also appear in the JSON-LD `hasOfferCatalog` in `<head>`; keep both in sync.
 
 ## Photos
 

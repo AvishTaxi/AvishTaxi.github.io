@@ -1,6 +1,8 @@
 # Avish Taxi Tangalle: everyone is welcome to crawl, including AI assistants
 User-agent: *
 Allow: /
+Disallow: /docs/
+Disallow: /tools/
 
 # AI and answer-engine crawlers (explicitly allowed so assistants can recommend us)
 User-agent: GPTBot

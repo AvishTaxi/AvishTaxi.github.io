@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Tangalle Taxi &amp; Private Driver | Airport Transfers &amp; Tours – Avish Taxi</title>
-<meta name="description" content="Avish Taxi Tangalle: trusted local taxi &amp; private driver in Tangalle, Sri Lanka. Colombo (CMB) &amp; Mattala airport transfers, Yala &amp; Udawalawe safaris, Galle, Mirissa and island-wide tours. Affordable, negotiable prices, clean AC cars, 24/7 WhatsApp booking.">
+<title>Tangalle Taxi &amp; Sri Lanka Airport Transfers | Private Driver – Avish Taxi</title>
+<meta name="description" content="Tangalle taxi with a local English-speaking driver for tourists visiting Sri Lanka. Colombo Airport (CMB) to Tangalle LKR 25,000, Mattala, Yala, Udawalawe, Ella, Galle &amp; Mirissa transfers. Affordable, negotiable prices, AC vehicles, 24/7 WhatsApp +94 76 562 7939.">
 <meta name="keywords" content="Tangalle taxi, taxi Tangalle, Tangalle airport transfer, Colombo airport to Tangalle taxi, Mattala airport taxi, private driver Sri Lanka, Yala safari from Tangalle, Udawalawe day trip, Tangalle to Galle taxi, Tangalle to Mirissa taxi, Hiriketiya taxi, Sri Lanka round tour driver">
 <meta name="author" content="Avish Taxi Tangalle">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
@@ -43,6 +43,7 @@
 <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="manifest" href="site.webmanifest">
+<link rel="alternate" type="text/markdown" href="/llms.txt" title="Avish Taxi summary for AI assistants">
 
 <!-- Hero image is the Largest Contentful Paint: fetch it first -->
 <link rel="preload" as="image" href="images/hero-portrait-800.avif" imagesrcset="images/hero-portrait-800.avif 800w, images/hero-portrait-1200.avif 1200w" imagesizes="100vw" type="image/avif" media="(max-width:700px)" fetchpriority="high">
@@ -404,6 +405,22 @@
     "worksFor": {
      "@id": "https://avishtaxi.github.io/#business"
     }
+   },
+   "slogan": "Your trusted ride in paradise",
+   "knowsAbout": [
+    "Colombo Airport to Tangalle taxi",
+    "Mattala Airport transfers",
+    "Yala safari from Tangalle",
+    "Udawalawe safari",
+    "Tangalle to Ella taxi",
+    "Galle Fort day trips",
+    "Mirissa whale watching transfers",
+    "Sri Lanka round tours"
+   ],
+   "subjectOf": {
+    "@type": "Article",
+    "name": "Sri Lanka taxi guide for tourists",
+    "url": "https://avishtaxi.github.io/sri-lanka-taxi-guide/"
    }
   },
   {
@@ -414,7 +431,45 @@
    "inLanguage": "en",
    "publisher": {
     "@id": "https://avishtaxi.github.io/#business"
-   }
+   },
+   "hasPart": [
+    {
+     "@type": "WebPage",
+     "url": "https://avishtaxi.github.io/colombo-airport-to-tangalle-taxi/"
+    },
+    {
+     "@type": "WebPage",
+     "url": "https://avishtaxi.github.io/mattala-airport-to-tangalle-taxi/"
+    },
+    {
+     "@type": "WebPage",
+     "url": "https://avishtaxi.github.io/tangalle-to-galle-taxi/"
+    },
+    {
+     "@type": "WebPage",
+     "url": "https://avishtaxi.github.io/tangalle-to-mirissa-taxi/"
+    },
+    {
+     "@type": "WebPage",
+     "url": "https://avishtaxi.github.io/tangalle-to-weligama-taxi/"
+    },
+    {
+     "@type": "WebPage",
+     "url": "https://avishtaxi.github.io/tangalle-to-yala-taxi/"
+    },
+    {
+     "@type": "WebPage",
+     "url": "https://avishtaxi.github.io/tangalle-to-udawalawe-taxi/"
+    },
+    {
+     "@type": "WebPage",
+     "url": "https://avishtaxi.github.io/tangalle-to-ella-taxi/"
+    },
+    {
+     "@type": "WebPage",
+     "url": "https://avishtaxi.github.io/sri-lanka-taxi-guide/"
+    }
+   ]
   },
   {
    "@type": "WebPage",
@@ -722,6 +777,8 @@ section{position:relative}
 .price-row.head{background:var(--teal-900);color:#fff;font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding-block:14px}
 [data-theme="dark"] .price-row.head{background:#041413}
 .route b{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-weight:650}
+.route-link{display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap;text-decoration:underline;text-decoration-color:color-mix(in srgb,var(--brand) 35%,transparent);text-underline-offset:4px}
+.route-link:hover{color:var(--brand)}
 .route b .arrow{color:var(--accent);width:16px;height:16px}
 .route span{display:flex;align-items:center;gap:6px;font-size:.84rem;color:var(--muted);margin-top:3px}
 .route span .icon{width:14px;height:14px}
@@ -1013,6 +1070,15 @@ section{position:relative}
 .steps p{color:var(--muted);font-size:.95rem}
 @media (min-width:820px){.steps{grid-template-columns:repeat(3,1fr);gap:22px}.steps li{grid-template-columns:1fr;padding:28px}.steps .num{grid-row:auto;margin-bottom:16px}}
 
+/* At a glance */
+.glance{margin:0 auto;max-width:900px;display:grid;gap:0;border-radius:var(--radius);overflow:hidden;border:1px solid var(--line);background:var(--surface)}
+.glance > div{display:grid;grid-template-columns:110px 1fr;gap:14px;padding:14px 18px;border-bottom:1px solid var(--line)}
+.glance > div:last-child{border-bottom:0}
+.glance dt{font-weight:700;color:var(--brand);font-size:.86rem;letter-spacing:.06em;text-transform:uppercase;padding-top:2px}
+.glance dd{margin:0;color:var(--ink-2)}
+.glance a{color:var(--brand);font-weight:700}
+@media (max-width:520px){.glance > div{grid-template-columns:1fr;gap:2px}}
+
 /* Reveal animations */
 .reveal{opacity:0;transform:translateY(12px);transition:opacity .6s ease-out,transform .6s ease-out}
 .reveal.in{opacity:1;transform:none}
@@ -1121,6 +1187,7 @@ section{position:relative}
   <a class="link" href="#fleet">Fleet <svg class="icon"><use href="#i-arrow"/></svg></a>
   <a class="link" href="#reviews">Reviews <svg class="icon"><use href="#i-arrow"/></svg></a>
   <a class="link" href="#contact">Contact <svg class="icon"><use href="#i-arrow"/></svg></a>
+  <a class="link" href="/sri-lanka-taxi-guide/">Sri Lanka taxi guide <svg class="icon"><use href="#i-arrow"/></svg></a>
   <div class="row">
     <a class="btn btn-outline" href="tel:+94765627939" data-tel><svg class="icon"><use href="#i-phone"/></svg>Call</a>
     <a class="btn btn-wa" href="https://wa.me/94765627939" data-wa="Hi Avishka, I'd like to book a taxi from [location] to [destination] on [date]." data-book="taxi" target="_blank" rel="noopener"><svg class="icon"><use href="#i-wa"/></svg>WhatsApp</a>
@@ -1291,49 +1358,49 @@ section{position:relative}
           </div>
 
           <div class="price-row" role="row">
-            <div class="route" role="cell"><b>Colombo Airport (CMB) <svg class="icon arrow"><use href="#i-arrow"/></svg> Tangalle</b><span><svg class="icon"><use href="#i-clock"/></svg>≈ 3 hrs via expressway</span></div>
+            <div class="route" role="cell"><b><a class="route-link" href="/colombo-airport-to-tangalle-taxi/">Colombo Airport (CMB) <svg class="icon arrow"><use href="#i-arrow"/></svg> Tangalle</a></b><span><svg class="icon"><use href="#i-clock"/></svg>≈ 3 hrs via expressway</span></div>
             <div class="amt" role="cell"><small>Car</small><span class="cur">LKR</span> 25,000</div>
             <div class="amt" role="cell"><small>Van / shuttle</small><span class="cur">LKR</span> 33,000</div>
             <div role="cell"><a class="btn btn-outline" href="https://wa.me/94765627939" data-wa="Hi Avishka, I'd like to book a taxi from Colombo Airport (CMB) to Tangalle on [date]. Flight number: [flight]. Passengers: [number]." data-book="route" data-from="Colombo Airport (CMB)" data-to="Tangalle" target="_blank" rel="noopener">Book</a></div>
           </div>
           <div class="price-row" role="row">
-            <div class="route" role="cell"><b>Mattala Airport (HRI) <svg class="icon arrow"><use href="#i-arrow"/></svg> Tangalle</b><span><svg class="icon"><use href="#i-clock"/></svg>≈ 1 hr</span></div>
+            <div class="route" role="cell"><b><a class="route-link" href="/mattala-airport-to-tangalle-taxi/">Mattala Airport (HRI) <svg class="icon arrow"><use href="#i-arrow"/></svg> Tangalle</a></b><span><svg class="icon"><use href="#i-clock"/></svg>≈ 1 hr</span></div>
             <div class="amt" role="cell"><small>Car</small><span class="cur">LKR</span> 15,000</div>
             <div class="amt" role="cell"><small>Van / shuttle</small><span class="cur">LKR</span> 18,000</div>
             <div role="cell"><a class="btn btn-outline" href="https://wa.me/94765627939" data-wa="Hi Avishka, I'd like to book a taxi from Mattala Airport (HRI) to Tangalle on [date]. Passengers: [number]." data-book="route" data-from="Mattala Airport (HRI)" data-to="Tangalle" target="_blank" rel="noopener">Book</a></div>
           </div>
           <div class="price-row" role="row">
-            <div class="route" role="cell"><b>Tangalle <svg class="icon arrow"><use href="#i-arrow"/></svg> Galle Fort</b><span><svg class="icon"><use href="#i-clock"/></svg>≈ 1 hr 30 min</span></div>
+            <div class="route" role="cell"><b><a class="route-link" href="/tangalle-to-galle-taxi/">Tangalle <svg class="icon arrow"><use href="#i-arrow"/></svg> Galle Fort</a></b><span><svg class="icon"><use href="#i-clock"/></svg>≈ 1 hr 30 min</span></div>
             <div class="amt" role="cell"><small>Car</small><span class="cur">LKR</span> 16,000</div>
             <div class="amt" role="cell"><small>Van / shuttle</small><span class="cur">LKR</span> 19,000</div>
             <div role="cell"><a class="btn btn-outline" href="https://wa.me/94765627939" data-wa="Hi Avishka, I'd like to book a taxi from Tangalle to Galle on [date]. Passengers: [number]." data-book="route" data-from="Tangalle" data-to="Galle" target="_blank" rel="noopener">Book</a></div>
           </div>
           <div class="price-row" role="row">
-            <div class="route" role="cell"><b>Tangalle <svg class="icon arrow"><use href="#i-arrow"/></svg> Mirissa</b><span><svg class="icon"><use href="#i-clock"/></svg>≈ 1 hr</span></div>
+            <div class="route" role="cell"><b><a class="route-link" href="/tangalle-to-mirissa-taxi/">Tangalle <svg class="icon arrow"><use href="#i-arrow"/></svg> Mirissa</a></b><span><svg class="icon"><use href="#i-clock"/></svg>≈ 1 hr</span></div>
             <div class="amt" role="cell"><small>Car</small><span class="cur">LKR</span> 9,000</div>
             <div class="amt" role="cell"><small>Van / shuttle</small><span class="cur">LKR</span> 13,000</div>
             <div role="cell"><a class="btn btn-outline" href="https://wa.me/94765627939" data-wa="Hi Avishka, I'd like to book a taxi from Tangalle to Mirissa on [date]. Passengers: [number]." data-book="route" data-from="Tangalle" data-to="Mirissa" target="_blank" rel="noopener">Book</a></div>
           </div>
           <div class="price-row" role="row">
-            <div class="route" role="cell"><b>Tangalle <svg class="icon arrow"><use href="#i-arrow"/></svg> Weligama</b><span><svg class="icon"><use href="#i-clock"/></svg>≈ 1 hr 15 min</span></div>
+            <div class="route" role="cell"><b><a class="route-link" href="/tangalle-to-weligama-taxi/">Tangalle <svg class="icon arrow"><use href="#i-arrow"/></svg> Weligama</a></b><span><svg class="icon"><use href="#i-clock"/></svg>≈ 1 hr 15 min</span></div>
             <div class="amt" role="cell"><small>Car</small><span class="cur">LKR</span> 10,000</div>
             <div class="amt" role="cell"><small>Van / shuttle</small><span class="cur">LKR</span> 14,000</div>
             <div role="cell"><a class="btn btn-outline" href="https://wa.me/94765627939" data-wa="Hi Avishka, I'd like to book a taxi from Tangalle to Weligama on [date]. Passengers: [number]." data-book="route" data-from="Tangalle" data-to="Weligama" target="_blank" rel="noopener">Book</a></div>
           </div>
           <div class="price-row" role="row">
-            <div class="route" role="cell"><b>Tangalle <svg class="icon arrow"><use href="#i-arrow"/></svg> Yala / Tissamaharama</b><span><svg class="icon"><use href="#i-clock"/></svg>≈ 1 hr 45 min</span></div>
+            <div class="route" role="cell"><b><a class="route-link" href="/tangalle-to-yala-taxi/">Tangalle <svg class="icon arrow"><use href="#i-arrow"/></svg> Yala / Tissamaharama</a></b><span><svg class="icon"><use href="#i-clock"/></svg>≈ 1 hr 45 min</span></div>
             <div class="amt" role="cell"><small>Car</small><span class="cur">LKR</span> 20,000</div>
             <div class="amt" role="cell"><small>Van / shuttle</small><span class="cur">LKR</span> 23,000</div>
             <div role="cell"><a class="btn btn-outline" href="https://wa.me/94765627939" data-wa="Hi Avishka, I'd like to book a taxi from Tangalle to Yala / Tissamaharama on [date]. Passengers: [number]." data-book="route" data-from="Tangalle" data-to="Yala / Tissamaharama" target="_blank" rel="noopener">Book</a></div>
           </div>
           <div class="price-row" role="row">
-            <div class="route" role="cell"><b>Tangalle <svg class="icon arrow"><use href="#i-arrow"/></svg> Udawalawe</b><span><svg class="icon"><use href="#i-clock"/></svg>≈ 1 hr 45 min</span></div>
+            <div class="route" role="cell"><b><a class="route-link" href="/tangalle-to-udawalawe-taxi/">Tangalle <svg class="icon arrow"><use href="#i-arrow"/></svg> Udawalawe</a></b><span><svg class="icon"><use href="#i-clock"/></svg>≈ 1 hr 45 min</span></div>
             <div class="amt" role="cell"><small>Car</small><span class="cur">LKR</span> 15,000</div>
             <div class="amt" role="cell"><small>Van / shuttle</small><span class="cur">LKR</span> 18,000</div>
             <div role="cell"><a class="btn btn-outline" href="https://wa.me/94765627939" data-wa="Hi Avishka, I'd like to book a taxi from Tangalle to Udawalawe on [date]. Passengers: [number]." data-book="route" data-from="Tangalle" data-to="Udawalawe" target="_blank" rel="noopener">Book</a></div>
           </div>
           <div class="price-row" role="row">
-            <div class="route" role="cell"><b>Tangalle <svg class="icon arrow"><use href="#i-arrow"/></svg> Ella</b><span><svg class="icon"><use href="#i-clock"/></svg>≈ 3 hrs</span></div>
+            <div class="route" role="cell"><b><a class="route-link" href="/tangalle-to-ella-taxi/">Tangalle <svg class="icon arrow"><use href="#i-arrow"/></svg> Ella</a></b><span><svg class="icon"><use href="#i-clock"/></svg>≈ 3 hrs</span></div>
             <div class="amt" role="cell"><small>Car</small><span class="cur">LKR</span> 23,000</div>
             <div class="amt" role="cell"><small>Van / shuttle</small><span class="cur">LKR</span> 27,000</div>
             <div role="cell"><a class="btn btn-outline" href="https://wa.me/94765627939" data-wa="Hi Avishka, I'd like to book a taxi from Tangalle to Ella on [date]. Passengers: [number]." data-book="route" data-from="Tangalle" data-to="Ella" target="_blank" rel="noopener">Book</a></div>
@@ -1701,6 +1768,24 @@ section{position:relative}
   </div>
 </section>
 
+<!-- ============ At a glance ============ -->
+<section class="section" id="glance" aria-labelledby="glance-title" style="padding-bottom:0">
+  <div class="wrap">
+    <div class="section-head center reveal">
+      <span class="eyebrow">At a glance</span>
+      <h2 id="glance-title">Avish Taxi Tangalle in 30 seconds</h2>
+    </div>
+    <dl class="glance reveal">
+      <div><dt>What</dt><dd>Private taxi, airport transfers and tours with a local English-speaking driver</dd></div>
+      <div><dt>Where</dt><dd>Based in Tangalle, Southern Province, Sri Lanka. South coast and island-wide</dd></div>
+      <div><dt>Driver</dt><dd>Avishka, local driver and guide (English &amp; Sinhala)</dd></div>
+      <div><dt>Prices</dt><dd>Per vehicle in LKR, from LKR 9,000 (Tangalle → Mirissa) to LKR 33,000 (Colombo Airport by van). Negotiable, always affordable</dd></div>
+      <div><dt>Vehicles</dt><dd>Car (1–3), SUV (1–4), van or shuttle (4–8), all air-conditioned</dd></div>
+      <div><dt>Book</dt><dd>24/7 on WhatsApp <a href="https://wa.me/94765627939" data-book="taxi" data-wa="Hi Avishka, I'd like to book a taxi from [location] to [destination] on [date]." target="_blank" rel="noopener">+94 76 562 7939</a></dd></div>
+    </dl>
+  </div>
+</section>
+
 <!-- ============ FAQ ============ -->
 <section class="section alt" id="faq" aria-labelledby="faq-title">
   <div class="wrap">
@@ -1846,13 +1931,15 @@ section{position:relative}
         </ul>
       </div>
       <div>
-        <h2 class="f-h">Popular</h2>
+        <h2 class="f-h">Popular taxi routes</h2>
         <ul>
-          <li><a href="#pricing">Colombo Airport → Tangalle</a></li>
-          <li><a href="#tours">Yala safari from Tangalle</a></li>
-          <li><a href="#tours">Udawalawe day trip</a></li>
-          <li><a href="#tours">Mirissa whale watching</a></li>
-          <li><a href="#tours">Galle Fort tour</a></li>
+          <li><a href="/colombo-airport-to-tangalle-taxi/">Colombo Airport → Tangalle taxi</a></li>
+          <li><a href="/mattala-airport-to-tangalle-taxi/">Mattala Airport → Tangalle taxi</a></li>
+          <li><a href="/tangalle-to-yala-taxi/">Tangalle → Yala safari taxi</a></li>
+          <li><a href="/tangalle-to-ella-taxi/">Tangalle → Ella taxi</a></li>
+          <li><a href="/tangalle-to-galle-taxi/">Tangalle → Galle taxi</a></li>
+          <li><a href="/tangalle-to-mirissa-taxi/">Tangalle → Mirissa taxi</a></li>
+          <li><a href="/sri-lanka-taxi-guide/">Sri Lanka taxi guide</a></li>
         </ul>
       </div>
       <div>
@@ -1959,15 +2046,16 @@ const CONFIG = {
     const url = CONFIG[a.getAttribute("data-social")];
     if (url) { a.href = url; a.hidden = false; }
   });
-  $("#google-reviews").href = CONFIG.googleReviewsUrl;
-  $("#write-review").href = CONFIG.writeReviewUrl || CONFIG.googleReviewsUrl;
-  $("#year").textContent = new Date().getFullYear();
+  const gr = $("#google-reviews"), wr = $("#write-review"), yr = $("#year");
+  if (gr) gr.href = CONFIG.googleReviewsUrl;
+  if (wr) wr.href = CONFIG.writeReviewUrl || CONFIG.googleReviewsUrl;
+  if (yr) yr.textContent = new Date().getFullYear();
 
   /* ---- Optional photos ---- */
   if (CONFIG.driverPhoto) {
     const img = new Image();
     img.src = CONFIG.driverPhoto; img.alt = CONFIG.driverName + ", your Tangalle driver"; img.loading = "lazy";
-    const ph = $("#portrait .ph"); ph.replaceWith(img);
+    const ph = $("#portrait .ph"); if (ph) ph.replaceWith(img);
   }
 
   /* ---- Gallery lightbox (tap to enlarge, swipe / arrow keys to browse) ---- */
@@ -2170,7 +2258,7 @@ const CONFIG = {
 
   /* ---- Reviews ---- */
   const grid = $("#reviews-grid");
-  if (CONFIG.reviews.length) {
+  if (grid && CONFIG.reviews.length) {
     const esc = (s) => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
     const star = '<svg class="icon"><use href="#i-star"/></svg>';
     grid.innerHTML = CONFIG.reviews.map((r, i) => {
@@ -2182,7 +2270,7 @@ const CONFIG = {
         '<footer><span class="avatar" aria-hidden="true">' + initials + '</span><div><cite>' + esc(r.name) + '</cite>' +
         '<small>' + esc(r.country || "") + (r.source ? " · via " + esc(r.source) : "") + '</small></div></footer></article>';
     }).join("");
-  } else {
+  } else if (grid) {
     grid.remove();
   }
 
@@ -2257,7 +2345,7 @@ const CONFIG = {
   };
 
   /* ---- Quick quote ---- */
-  $("#quick-quote").addEventListener("submit", e => {
+  if ($("#quick-quote")) $("#quick-quote").addEventListener("submit", e => {
     e.preventDefault();
     const f = e.target;
     const from = f.from.value.trim() || "[location]";
@@ -2268,6 +2356,7 @@ const CONFIG = {
 
   /* ---- Booking form ---- */
   const form = $("#booking-form"), status = $("#form-status");
+  if (form) {
   let mode = "wa";
   $$('button[type="submit"]', form).forEach(b => b.addEventListener("click", () => { mode = b.dataset.mode; }));
 
@@ -2322,6 +2411,7 @@ const CONFIG = {
     window.location.href = "mailto:" + CONFIG.email + "?subject=" + encodeURIComponent("Booking request: " + d.pickup + " → " + d.destination) + "&body=" + encodeURIComponent(text);
     show("Your email app is opening with the booking details.", true);
   });
+  }
 })();
 </script>
 </body>

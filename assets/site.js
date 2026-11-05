@@ -7,8 +7,8 @@ const CONFIG = {
   phoneDisplay: "+94 76 562 7939",    // EDIT: how the number is shown on the page
   email: "",                          // EDIT: booking email address (email links stay hidden while empty)
   formspreeId: "",                    // OPTIONAL: Formspree form ID (e.g. "xayzabcd") so "Send by email" posts silently. Empty = opens the visitor's email app.
-  googleReviewsUrl: "https://www.google.com/maps/search/?api=1&query=Avish+Taxi+Tangalle", // EDIT: your Google Business profile link
-  writeReviewUrl: "",                 // OPTIONAL: your Google "write a review" link (g.page/r/…/review)
+  googleReviewsUrl: "https://g.page/r/CVZ3o3eDvxQkEBM",   // Google Business Profile (read reviews)
+  writeReviewUrl: "https://g.page/r/CVZ3o3eDvxQkEBM/review", // Google "write a review" link
   facebook: "",                       // OPTIONAL: full URL, shows the icon when set
   instagram: "",                      // OPTIONAL: full URL, shows the icon when set
   driverPhoto: "",                    // OPTIONAL: e.g. "images/avishka.jpg" replaces the portrait illustration

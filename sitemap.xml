@@ -3,61 +3,88 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://avishtaxi.github.io/</loc>
-    <lastmod>2026-11-04</lastmod>
-    <changefreq>monthly</changefreq>
+    <lastmod>2026-11-05</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-    <image:image>
-      <image:loc>https://avishtaxi.github.io/images/hero.jpg</image:loc>
-      <image:title>Goyambokka beach, Tangalle</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://avishtaxi.github.io/images/yala-leopard.jpg</image:loc>
-      <image:title>Sri Lankan leopard in Yala National Park</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://avishtaxi.github.io/images/udawalawe.jpg</image:loc>
-      <image:title>Elephants at Udawalawe</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://avishtaxi.github.io/images/galle-fort.jpg</image:loc>
-      <image:title>Galle Fort lighthouse</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://avishtaxi.github.io/images/mirissa-whale.jpg</image:loc>
-      <image:title>Blue whale off Mirissa</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://avishtaxi.github.io/images/hiriketiya.jpg</image:loc>
-      <image:title>Beach near Tangalle</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://avishtaxi.github.io/images/mulkirigala.jpg</image:loc>
-      <image:title>Mulkirigala rock temple</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://avishtaxi.github.io/images/round-tour.jpg</image:loc>
-      <image:title>Nine Arches Bridge, Ella</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://avishtaxi.github.io/images/tangalle-lagoon.jpg</image:loc>
-      <image:title>Lagoon sunset, Tangalle</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://avishtaxi.github.io/images/stilt-fishing.jpg</image:loc>
-      <image:title>Stilt fishermen near Galle</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://avishtaxi.github.io/images/hummanaya.jpg</image:loc>
-      <image:title>Hummanaya blowhole</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://avishtaxi.github.io/images/tangalle-beach.jpg</image:loc>
-      <image:title>Sunset at Tangalle beach</image:title>
-    </image:image>
+    <image:image><image:loc>https://avishtaxi.github.io/images/hero-1920.jpg</image:loc><image:title>Hero, Sri Lanka</image:title></image:image>
+    <image:image><image:loc>https://avishtaxi.github.io/images/yala-leopard.jpg</image:loc><image:title>Yala Leopard, Sri Lanka</image:title></image:image>
+    <image:image><image:loc>https://avishtaxi.github.io/images/udawalawe.jpg</image:loc><image:title>Udawalawe, Sri Lanka</image:title></image:image>
+    <image:image><image:loc>https://avishtaxi.github.io/images/galle-fort.jpg</image:loc><image:title>Galle Fort, Sri Lanka</image:title></image:image>
+    <image:image><image:loc>https://avishtaxi.github.io/images/mirissa-whale.jpg</image:loc><image:title>Mirissa Whale, Sri Lanka</image:title></image:image>
+    <image:image><image:loc>https://avishtaxi.github.io/images/hiriketiya.jpg</image:loc><image:title>Hiriketiya, Sri Lanka</image:title></image:image>
+    <image:image><image:loc>https://avishtaxi.github.io/images/mulkirigala.jpg</image:loc><image:title>Mulkirigala, Sri Lanka</image:title></image:image>
+    <image:image><image:loc>https://avishtaxi.github.io/images/round-tour.jpg</image:loc><image:title>Round Tour, Sri Lanka</image:title></image:image>
+    <image:image><image:loc>https://avishtaxi.github.io/images/tangalle-lagoon.jpg</image:loc><image:title>Tangalle Lagoon, Sri Lanka</image:title></image:image>
+    <image:image><image:loc>https://avishtaxi.github.io/images/stilt-fishing.jpg</image:loc><image:title>Stilt Fishing, Sri Lanka</image:title></image:image>
+    <image:image><image:loc>https://avishtaxi.github.io/images/hummanaya.jpg</image:loc><image:title>Hummanaya, Sri Lanka</image:title></image:image>
+    <image:image><image:loc>https://avishtaxi.github.io/images/tangalle-beach.jpg</image:loc><image:title>Tangalle Beach, Sri Lanka</image:title></image:image>
+  </url>
+  <url>
+    <loc>https://avishtaxi.github.io/colombo-airport-to-tangalle-taxi/</loc>
+    <lastmod>2026-11-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image><image:loc>https://avishtaxi.github.io/images/hero-1920.jpg</image:loc><image:title>Goyambokka beach in Tangalle, the end of the drive from Colombo Airport</image:title></image:image>
+  </url>
+  <url>
+    <loc>https://avishtaxi.github.io/mattala-airport-to-tangalle-taxi/</loc>
+    <lastmod>2026-11-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image><image:loc>https://avishtaxi.github.io/images/tangalle-lagoon.jpg</image:loc><image:title>Sunset over the lagoon near Tangalle</image:title></image:image>
+  </url>
+  <url>
+    <loc>https://avishtaxi.github.io/tangalle-to-galle-taxi/</loc>
+    <lastmod>2026-11-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image><image:loc>https://avishtaxi.github.io/images/galle-fort.jpg</image:loc><image:title>Galle Fort lighthouse on the Sri Lankan south coast</image:title></image:image>
+  </url>
+  <url>
+    <loc>https://avishtaxi.github.io/tangalle-to-mirissa-taxi/</loc>
+    <lastmod>2026-11-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image><image:loc>https://avishtaxi.github.io/images/mirissa-whale.jpg</image:loc><image:title>Blue whale surfacing off Mirissa</image:title></image:image>
+  </url>
+  <url>
+    <loc>https://avishtaxi.github.io/tangalle-to-weligama-taxi/</loc>
+    <lastmod>2026-11-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image><image:loc>https://avishtaxi.github.io/images/stilt-fishing.jpg</image:loc><image:title>Traditional stilt fishermen on the south coast near Weligama</image:title></image:image>
+  </url>
+  <url>
+    <loc>https://avishtaxi.github.io/tangalle-to-yala-taxi/</loc>
+    <lastmod>2026-11-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image><image:loc>https://avishtaxi.github.io/images/yala-leopard.jpg</image:loc><image:title>Sri Lankan leopard in Yala National Park</image:title></image:image>
+  </url>
+  <url>
+    <loc>https://avishtaxi.github.io/tangalle-to-udawalawe-taxi/</loc>
+    <lastmod>2026-11-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image><image:loc>https://avishtaxi.github.io/images/udawalawe.jpg</image:loc><image:title>Young elephants at the Udawalawe Elephant Transit Home</image:title></image:image>
+  </url>
+  <url>
+    <loc>https://avishtaxi.github.io/tangalle-to-ella-taxi/</loc>
+    <lastmod>2026-11-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image><image:loc>https://avishtaxi.github.io/images/round-tour.jpg</image:loc><image:title>The Nine Arches Bridge in Ella</image:title></image:image>
+  </url>
+  <url>
+    <loc>https://avishtaxi.github.io/sri-lanka-taxi-guide/</loc>
+    <lastmod>2026-11-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image><image:loc>https://avishtaxi.github.io/images/tangalle-beach.jpg</image:loc><image:title>Sunset over the sea at Tangalle beach</image:title></image:image>
   </url>
   <url>
     <loc>https://avishtaxi.github.io/credits.html</loc>
-    <lastmod>2026-11-04</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.2</priority>
   </url>

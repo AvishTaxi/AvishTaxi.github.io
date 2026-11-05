@@ -10,12 +10,18 @@ It's plain HTML, CSS and JavaScript with no build step. GitHub Pages serves it s
 
 | Path | Purpose |
 |---|---|
-| `index.html` | The whole one-page site: styles, icons and script are built in |
+| `index.html` | The home page and the single source of the design: styles, icons, header, footer, booking forms and script are built in |
+| `colombo-airport-to-tangalle-taxi/`, `mattala-airport-to-tangalle-taxi/`, `tangalle-to-*-taxi/` | One landing page per taxi route (price, time, route, FAQ, booking), each targeting the search people actually type, e.g. "Colombo Airport to Tangalle taxi" |
+| `sri-lanka-taxi-guide/` | Guide for foreign visitors: how taxis work in Sri Lanka, prices, tips |
+| `assets/site.css`, `assets/site.js` | Shared styles and script for the landing pages, copied from `index.html` by the build script |
+| `tools/build_pages.py` | Builds the landing pages, `llms.txt` and `sitemap.xml`. Run `python3 tools/build_pages.py` after changing `index.html`, prices or route text |
+| `llms.txt` | Plain-language summary of the business, prices and pages for AI assistants (ChatGPT, Claude, Perplexity, Gemini) |
+| `57a3ff78275181cb643afdca11d016fc.txt` | IndexNow key, lets Bing, Yandex and other engines be told instantly when pages change |
 | `images/` | Real photos of Tangalle and the south coast in 800 / 1200 / 1600 px WebP with JPEG fallbacks, plus a portrait crop of the hero for phones |
 | `credits.html` | Photographer credits and licences for every photo (required by the CC licences, so keep it linked in the footer) |
 | `404.html` | Friendly "page not found" page |
 | `favicon.svg`, `*.png`, `site.webmanifest` | Icons and "Add to home screen" support |
-| `robots.txt`, `sitemap.xml` | Help search engines find and index the site (the sitemap also lists the images) |
+| `robots.txt`, `sitemap.xml` | Help search engines and AI crawlers find and index every page (the sitemap also lists the images) |
 | `.nojekyll` | Tells GitHub Pages to serve the files as they are |
 
 ## Contact details
@@ -32,7 +38,7 @@ Then check the `CONFIG` block near the bottom of `index.html`:
 - `driverPhoto`: add a real photo of Avishka (e.g. `images/avishka.jpg`). It replaces the beach photo in the "Meet your driver" section. A friendly photo of the driver next to the car builds a lot of trust.
 - `reviews`: add **real** guest reviews only, copied with permission from Google, TripAdvisor or WhatsApp.
 
-Prices are Avishka's real fares in **Sri Lankan Rupees (LKR)**, per vehicle (car / van or shuttle), with a note that they can be negotiated and may change from day to day. Also confirm the **fleet** and the promises in **About** and **FAQ** are true. Prices also appear in the JSON-LD `hasOfferCatalog` in `<head>`; keep both in sync.
+Prices are Avishka's real fares in **Sri Lankan Rupees (LKR)**, per vehicle (car / van or shuttle), with a note that they can be negotiated and may change from day to day. Also confirm the **fleet** and the promises in **About** and **FAQ** are true. Prices also appear in the JSON-LD `hasOfferCatalog` in `<head>` of `index.html` and in the `ROUTES` list in `tools/build_pages.py` (which builds the route pages and `llms.txt`); keep them in sync and re-run the build script.
 
 ## Photos
 
@@ -42,14 +48,23 @@ All photos are real photographs of Sri Lanka from Wikimedia Commons under Creati
 
 Short, steady phone clips (5–15 seconds, landscape, filmed by Avishka: the car, an airport pickup, the coast road) work far better than stock footage. Send them and they can be compressed and added to the gallery.
 
-## SEO checklist after launch
+## SEO and AI-search checklist
 
-1. Open [Google Search Console](https://search.google.com/search-console), add `https://avishtaxi.github.io/` (URL-prefix property, verify with the HTML-tag method by adding the `<meta name="google-site-verification">` tag to `<head>`), then submit `sitemap.xml`.
-2. Do the same in [Bing Webmaster Tools](https://www.bing.com/webmasters) (it can import from Google Search Console).
-3. Create or claim the **Google Business Profile** for "Avish Taxi Tangalle" and put this site as the website. For a local taxi this matters more than anything else for ranking in Google Maps.
-4. Ask happy guests for Google reviews, and list the business on TripAdvisor with a link back here.
-5. Test with [Rich Results Test](https://search.google.com/test/rich-results) (LocalBusiness, FAQ) and [PageSpeed Insights](https://pagespeed.web.dev/).
-6. Share the link on WhatsApp once to check the preview image.
+Done on the site:
+- A landing page for each high-intent taxi search (airport transfers and the 6 most popular routes from Tangalle) plus a Sri Lanka taxi guide for visitors, all interlinked with the home page
+- Answer-first content ("Quick answer" boxes, an "At a glance" fact list, FAQ) that Google and AI assistants can quote directly
+- Structured data on every page: `LocalBusiness` + `TaxiService` with LKR offers, `Service`, `FAQPage`, `BreadcrumbList`, `Article`, `Person` (Avishka)
+- `llms.txt` and a `robots.txt` that explicitly welcomes AI crawlers (GPTBot, OAI-SearchBot, ClaudeBot, PerplexityBot, Google-Extended and others)
+- Image sitemap covering every page, canonical URLs, Open Graph cards, fast mobile pages (Lighthouse SEO 100 on every page)
+
+Do these yourself (they need your accounts):
+1. **Google Search Console** (verified): open *Sitemaps*, enter `sitemap.xml` and press *Submit*. Then use *URL Inspection* → *Request indexing* for the home page and the Colombo Airport page.
+2. **Bing Webmaster Tools**: sign in at https://www.bing.com/webmasters and choose *Import from Google Search Console*. Bing also powers ChatGPT and Copilot search.
+3. **IndexNow ping** (Bing, Yandex, Seznam, Naver): open this link once after each update: https://api.indexnow.org/indexnow?url=https://avishtaxi.github.io/&key=57a3ff78275181cb643afdca11d016fc
+4. **Google Business Profile** for "Avish Taxi Tangalle" with this website, the WhatsApp number, photos of the car and Avishka. This matters most for "taxi near me" and Google Maps.
+5. **Reviews**: ask every happy guest for a Google review. Also list on TripAdvisor. Reviews are the strongest local ranking signal and what AI assistants cite.
+6. **Mentions**: get the site linked from hotel and villa partners in Tangalle, Facebook/Instagram profiles and travel forums (each link is a vote of trust).
+7. Re-test occasionally with the [Rich Results Test](https://search.google.com/test/rich-results) and [PageSpeed Insights](https://pagespeed.web.dev/).
 
 ## What's built in
 

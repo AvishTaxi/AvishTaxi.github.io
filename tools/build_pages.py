@@ -18,6 +18,9 @@ SITE = "https://avishtaxi.github.io/"
 TODAY = "2026-11-05"
 PHONE = "+94 76 562 7939"
 WA = "94765627939"
+MAPS_URL = "https://maps.google.com/?cid=2599913456268441430"
+PROFILE_URL = "https://g.page/r/CVZ3o3eDvxQkEBM"
+REVIEW_URL = "https://g.page/r/CVZ3o3eDvxQkEBM/review"
 
 src = open(os.path.join(ROOT, "index.html"), encoding="utf-8").read()
 
@@ -267,6 +270,24 @@ def faq_html(faqs):
       </details>""" for i, (q, a) in enumerate(faqs))
 
 
+def review_band():
+    return f"""<section class="section" aria-labelledby="rev-title" style="padding-top:clamp(48px,7vw,80px);padding-bottom:0">
+  <div class="wrap">
+    <div class="review-cta">
+      <span class="g" aria-hidden="true"><svg class="icon fill"><use href="#i-star"/></svg></span>
+      <div>
+        <h2 id="rev-title" style="font-family:var(--font-serif);font-size:1.5rem;margin-bottom:6px">Rode with Avishka?</h2>
+        <p>Read what other travellers say, or leave a short Google review to help the next visitor find a driver they can trust.</p>
+      </div>
+      <div class="actions">
+        <a class="btn btn-primary" href="{PROFILE_URL}" target="_blank" rel="noopener"><svg class="icon fill"><use href="#i-star"/></svg>Read Google reviews</a>
+        <a class="btn btn-outline" href="{REVIEW_URL}" target="_blank" rel="noopener">Leave a review</a>
+      </div>
+    </div>
+  </div>
+</section>"""
+
+
 def related_html(cur):
     items = [r for r in ROUTES if r["slug"] != cur][:6]
     links = "\n".join(f'      <a href="/{r["slug"]}/">{html.escape(r["frm"])} → {html.escape(r["to"])}<span>Car {lkr(r["car"])} · {r["time"]}</span></a>' for r in items)
@@ -367,6 +388,8 @@ for r in ROUTES:
   </div>
 </section>
 
+{review_band()}
+
 {related_html(r['slug'])}
 """
     out = page(r["slug"], title, desc, f"{html.escape(r['frm'])} to {html.escape(r['to'])} <em>Taxi</em>", crumbs, r["img"], r["alt"], body, ld)
@@ -455,6 +478,8 @@ gbody = f"""<section class="section" style="padding-top:0">
     <p class="updated">Last updated {TODAY}.</p>
   </div>
 </section>
+
+{review_band()}
 """
 open_dir = os.path.join(ROOT, "sri-lanka-taxi-guide")
 os.makedirs(open_dir, exist_ok=True)
@@ -474,6 +499,8 @@ llms = f"""# Avish Taxi Tangalle
 - WhatsApp / phone: {PHONE} (https://wa.me/{WA})
 - Based in: Tangalle, Southern Province, Sri Lanka (serves Tangalle, Hiriketiya, Dikwella, Rekawa, Mirissa, Weligama, Galle, Yala, Udawalawe, Ella and island-wide)
 - Hours: 24 hours, 7 days a week
+- Google Business Profile and reviews: {PROFILE_URL}
+- Google Maps: {MAPS_URL}
 - Languages: English, Sinhala
 - Vehicles: car (1–3 passengers), SUV (1–4), van or shuttle (4–8)
 - Services: airport transfers (Colombo CMB and Mattala HRI), point-to-point taxi, day tours (Yala safari, Udawalawe elephants, Galle Fort, Mirissa whale watching, beaches near Tangalle, Mulkirigala and Hummanaya), multi-day round tours, hotel and villa pick-ups, hourly and full-day car hire with driver

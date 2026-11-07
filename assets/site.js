@@ -162,7 +162,7 @@ const CONFIG = {
       timer = setTimeout(async () => {
         let remote = [];
         try { remote = await placeSearch(q, 6); } catch (e) {}
-        if (my !== seq) return;
+        if (my !== seq || document.activeElement !== input) return;   // field changed or was left meanwhile
         const seen = new Set(local.map(l => l.name.toLowerCase()));
         const k = q.toLowerCase();
         const all = local.concat(remote.filter(r => !seen.has(r.name.toLowerCase())))
@@ -183,7 +183,7 @@ const CONFIG = {
       else if (e.key === "Escape") { e.stopPropagation(); close(); }
     });
     list.addEventListener("mousedown", e => { const li = e.target.closest("li[data-i]"); if (li) { e.preventDefault(); pick(+li.dataset.i); } });
-    input.addEventListener("blur", () => setTimeout(close, 150));
+    input.addEventListener("blur", () => { seq++; clearTimeout(timer); setTimeout(close, 150); });
   };
   ["#qq-from", "#qq-to", "#f-pickup", "#f-dest"].forEach(sel => { const el = $(sel); if (el) attachPlaceAC(el); });
 
@@ -404,14 +404,23 @@ const CONFIG = {
       try { const p = await placeSearch(q, 1); if (p.length) return { name: q, lat: p[0].lat, lng: p[0].lng }; } catch (e) {}
       try { return await nominatim(q); } catch (e) { return null; }
     };
-    const setPlace = (input, place) => {
+    const setPlace = (input, place, quiet) => {
       input.value = place.name; input.dataset.label = place.name; input.dataset.lat = place.lat; input.dataset.lng = place.lng;
       input.setAttribute("aria-invalid", "false");
       previewMarkers();
+      if (!quiet) autoRoute();
     };
     const attachAC = (input) => {
       input.addEventListener("input", () => { delete input.dataset.lat; delete input.dataset.label; });
       attachPlaceAC(input, place => setPlace(input, place));
+      // typed a place and moved on without picking a suggestion: look it up, then update the route
+      input.addEventListener("change", () => {
+        setTimeout(async () => {
+          if (input.dataset.lat || !input.value.trim()) return;
+          const pt = await resolve(input);
+          if (pt && !input.dataset.lat) setPlace(input, pt);
+        }, 200);
+      });
     };
     $$(".pl-place", plForm).forEach(attachAC);
 
@@ -490,7 +499,7 @@ const CONFIG = {
         '<ul class="pl-ac" id="' + id + '-list" role="listbox" hidden></ul></div><button class="pl-x" type="button" aria-label="Remove this stop">×</button>';
       stopsBox.insertBefore(row, stopsBox.querySelector("[data-kind=end]"));
       attachAC(row.querySelector("input"));
-      row.querySelector(".pl-x").addEventListener("click", () => { stopsBox.removeChild(row); renumber(); previewMarkers(); });
+      row.querySelector(".pl-x").addEventListener("click", () => { stopsBox.removeChild(row); renumber(); previewMarkers(); autoRoute(); });
       renumber();
       if (val) row.querySelector("input").value = val;
       return row.querySelector("input");
@@ -501,7 +510,7 @@ const CONFIG = {
       const da = keys.map(k => a.dataset[k]), db = keys.map(k => b.dataset[k]);
       [a.value, b.value] = [b.value, a.value];
       keys.forEach((k, i) => { if (db[i] !== undefined) a.dataset[k] = db[i]; else delete a.dataset[k]; if (da[i] !== undefined) b.dataset[k] = da[i]; else delete b.dataset[k]; });
-      previewMarkers();
+      previewMarkers(); autoRoute();
     });
     $("#pl-geo").addEventListener("click", () => {
       if (!navigator.geolocation) { say("Your browser can't share its location. Please type the pickup place.", true); return; }
@@ -542,42 +551,68 @@ const CONFIG = {
       return PRICES.find(([x, y]) => (x.test(a) && y.test(b)) || (x.test(b) && y.test(a))) || null;
     };
 
+    /* ---------- route computation (runs automatically as soon as pickup and drop-off are known) ---------- */
+    let planKey = "", inflight = null, autoT = null;
+    const placeInputs = () => [$("#pl-from"), ...$$(".pl-row[data-kind=via] input", stopsBox).filter(i => i.value.trim()), $("#pl-to")];
+    const keyOf = (pts) => pts.map(p => p.lat.toFixed(5) + "," + p.lng.toFixed(5)).join(";");
+    const clearRoute = () => {
+      plan = null; planKey = ""; $("#pl-km").textContent = "0 km"; $("#pl-dur").textContent = "0 min"; $("#pl-src").textContent = ""; $("#pl-legs").innerHTML = ""; $("#pl-gmaps").hidden = true;
+      if (layer) layer.clearLayers(); previewMarkers();
+    };
+    const showRoute = (pts, r) => {
+      $("#pl-km").textContent = fmtKm(r.distance);
+      $("#pl-dur").textContent = fmtTime(r.duration);
+      $("#pl-src").textContent = "Road route · " + r.src;
+      $("#pl-legs").innerHTML = pts.length > 2 ? r.legs.map((l, i) => '<li><b>' + esc2(pts[i].name) + ' → ' + esc2(pts[i + 1].name) + '</b><span>' + fmtKm(l.distance) + ' · ' + fmtTime(l.duration) + '</span></li>').join("") : "";
+      const enc = (q) => encodeURIComponent(q.lat.toFixed(6) + "," + q.lng.toFixed(6));
+      const g = $("#pl-gmaps"); g.hidden = false;
+      g.href = "https://www.google.com/maps/dir/?api=1&travelmode=driving&origin=" + enc(pts[0]) + "&destination=" + enc(pts[pts.length - 1]) + (pts.length > 2 ? "&waypoints=" + pts.slice(1, -1).map(enc).join("%7C") : "");
+      const pr = plan.price, ret = $("#pl-return").checked;
+      const show = (k, v) => { const el = $("[data-price=" + k + "]"); el.className = v ? "" : "q"; el.textContent = v ? lkr(v) + (ret ? " each way" : "") : "Quote on WhatsApp"; };
+      show("car", pr && pr[2]); show("suv", null); show("van", pr && pr[3]);
+      $("#pl-mini").innerHTML = '<span>' + esc2(pts[0].name) + ' → ' + esc2(ret ? pts[0].name + " (return)" : pts[pts.length - 1].name) + ': ' + fmtKm(r.distance) + ' by road · ' + fmtTime(r.duration) + '</span><a href="#pl-map">See route map ↓</a>';
+    };
+    // strict = true when the visitor presses the button: typed places are looked up; otherwise only places already chosen are used.
+    const computeRoute = async (strict) => {
+      const ins = placeInputs();
+      if (!strict && ins.some(i => !i.dataset.lat)) return "incomplete";
+      const pts = [];
+      for (const i of ins) {
+        let pt = i.dataset.lat ? { name: i.value, lat: +i.dataset.lat, lng: +i.dataset.lng } : await resolve(i);
+        if (!pt) { i.setAttribute("aria-invalid", "true"); say("We couldn't find “" + i.value + "” in Sri Lanka. Pick a suggestion from the list or try a nearby town.", true); i.focus(); return "notfound"; }
+        if (!i.dataset.lat) setPlace(i, pt, true);
+        pts.push(pt);
+      }
+      if ($("#pl-return").checked) pts.push(Object.assign({}, pts[0]));
+      const key = keyOf(pts);
+      if (plan && planKey === key) return "ok";
+      if (inflight && inflight.key === key) return inflight.promise;
+      const job = (async () => {
+        $("#pl-src").textContent = "Calculating road route…"; $("#pl-km").textContent = "…"; $("#pl-dur").textContent = "…";
+        const r = await route(pts);
+        if (inflight && inflight.key !== key) return "stale";        // a newer trip was entered meanwhile
+        if (!r) { clearRoute(); say("The road-route service is busy right now. Please try again in a moment, or send your trip on WhatsApp and Avishka will reply with the distance and price.", true); return "fail"; }
+        plan = { pts, r, price: priceFor(pts) }; planKey = key;
+        say(""); showRoute(pts, r); await drawRoute(pts, r);
+        return "ok";
+      })();
+      inflight = { key, promise: job };
+      try { return await job; } finally { if (inflight && inflight.key === key) inflight = null; }
+    };
+    const autoRoute = () => { clearTimeout(autoT); autoT = setTimeout(() => { computeRoute(false).catch(() => {}); }, 300); };
+    $("#pl-return").addEventListener("change", autoRoute);
+
     plForm.addEventListener("submit", async e => {
       e.preventDefault();
-      const ins = [$("#pl-from"), ...$$(".pl-row[data-kind=via] input", stopsBox).filter(i => i.value.trim()), $("#pl-to")];
+      const ins = placeInputs();
       let bad = null;
       [$("#pl-date"), $("#pl-time"), ...ins].forEach(i => { const no = !i.value.trim(); i.setAttribute("aria-invalid", no ? "true" : "false"); if (no && !bad) bad = i; });
       if (bad) { say(bad.type === "date" || bad.type === "time" ? "Please choose the pickup date and time." : "Please enter the pickup and drop-off locations.", true); bad.focus(); return; }
-      const go = $("#pl-go"); go.disabled = true; say("Finding the best road route…");
+      const go = $("#pl-go"); go.disabled = true;
+      if (!plan) say("Finding the best road route…");
       try {
-        const pts = [];
-        for (const i of ins) {
-          const p = await resolve(i);
-          if (!p) { i.setAttribute("aria-invalid", "true"); say("We couldn't find “" + i.value + "” in Sri Lanka. Pick a suggestion from the list or try a nearby town.", true); i.focus(); return; }
-          if (!i.dataset.lat) setPlace(i, p);
-          pts.push(p);
-        }
-        if ($("#pl-return").checked) pts.push(Object.assign({}, pts[0]));
-        const r = await route(pts);
-        if (!r) {
-          plan = null; $("#pl-km").textContent = "0 km"; $("#pl-dur").textContent = "0 min"; $("#pl-src").textContent = ""; $("#pl-legs").innerHTML = ""; $("#pl-gmaps").hidden = true;
-          if (layer) layer.clearLayers(); previewMarkers();
-          say("The road-route service is busy right now. Please try again in a moment, or send your trip on WhatsApp and Avishka will reply with the distance and price.", true); return;
-        }
-        plan = { pts, r, price: priceFor(pts) };
-        $("#pl-km").textContent = fmtKm(r.distance);
-        $("#pl-dur").textContent = fmtTime(r.duration);
-        $("#pl-src").textContent = "Road route · " + r.src;
-        $("#pl-legs").innerHTML = pts.length > 2 ? r.legs.map((l, i) => '<li><b>' + esc2(pts[i].name) + ' → ' + esc2(pts[i + 1].name) + '</b><span>' + fmtKm(l.distance) + ' · ' + fmtTime(l.duration) + '</span></li>').join("") : "";
-        const enc = (p) => encodeURIComponent(p.name === "My location" ? p.lat + "," + p.lng : p.lat.toFixed(6) + "," + p.lng.toFixed(6));
-        const g = $("#pl-gmaps"); g.hidden = false;
-        g.href = "https://www.google.com/maps/dir/?api=1&travelmode=driving&origin=" + enc(pts[0]) + "&destination=" + enc(pts[pts.length - 1]) + (pts.length > 2 ? "&waypoints=" + pts.slice(1, -1).map(enc).join("%7C") : "");
-        const pr = plan.price, ret = $("#pl-return").checked;
-        const show = (k, v) => { const el = $("[data-price=" + k + "]"); el.className = v ? "" : "q"; el.textContent = v ? lkr(v) + (ret ? " each way" : "") : "Quote on WhatsApp"; };
-        show("car", pr && pr[2]); show("suv", null); show("van", pr && pr[3]);
-        $("#pl-mini").innerHTML = '<span>' + esc2(pts[0].name) + ' → ' + esc2(ret ? pts[0].name + " (return)" : pts[pts.length - 1].name) + ': ' + fmtKm(r.distance) + ' by road · ' + fmtTime(r.duration) + '</span><a href="#pl-map">See route map ↓</a>';
-        await drawRoute(pts, r);
-        goStep(2);
+        clearTimeout(autoT);
+        if (await computeRoute(true) === "ok") goStep(2);
       } catch (err) {
         say("Sorry, something went wrong. Please check your connection, or send your trip on WhatsApp.", true);
       } finally { go.disabled = false; }

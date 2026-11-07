@@ -1083,49 +1083,88 @@ section{position:relative}
 @media (max-width:520px){.glance > div{grid-template-columns:1fr;gap:2px}}
 
 /* Trip planner */
+.pl-steps{list-style:none;margin:0 auto 22px;padding:0;display:flex;justify-content:center;gap:8px;flex-wrap:wrap;counter-reset:none}
+.pl-steps li{display:flex;align-items:center;gap:8px;padding:8px 14px 8px 8px;border-radius:999px;background:var(--surface);border:1px solid var(--line);font-size:.88rem;font-weight:600;color:var(--muted)}
+.pl-steps li span{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--surface-2);font-weight:800;font-size:.8rem}
+.pl-steps li.on{color:var(--ink);border-color:var(--brand)}
+.pl-steps li.on span{background:var(--brand);color:var(--brand-ink)}
+.pl-steps li.done span{background:color-mix(in srgb,var(--brand) 20%,transparent);color:var(--brand)}
+@media (max-width:520px){.pl-steps li{font-size:0;padding:6px}.pl-steps li.on{font-size:.85rem;padding-right:12px}}
 .planner{display:grid;gap:22px;grid-template-columns:1fr}
-@media (min-width:980px){.planner{grid-template-columns:400px 1fr;align-items:start}}
-.pl-form{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:clamp(18px,3vw,26px);box-shadow:var(--shadow)}
-@media (min-width:980px){.pl-form{position:sticky;top:calc(var(--nav-h) + 20px)}}
-.pl-stops{display:grid;gap:12px;position:relative}
-.pl-row{display:grid;grid-template-columns:30px 1fr 46px;gap:10px;align-items:end}
-.pl-dot{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-size:.78rem;font-weight:800;color:#fff;background:var(--brand);margin-bottom:10px}
+@media (min-width:980px){.planner{grid-template-columns:minmax(360px,420px) 1fr;align-items:start}}
+.pl-panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:clamp(18px,3vw,26px);box-shadow:var(--shadow)}
+.pl-step{display:grid;gap:14px}
+.pl-two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pl-field label,.pl-field .lbl,.pl-veh .lbl{display:block;font-size:.8rem;font-weight:700;color:var(--ink-2);margin-bottom:6px}
+.pl-field label small{font-weight:500;color:var(--muted)}
+.pl-field .req{color:var(--coral)}
+.pl-field input,.pl-field textarea{width:100%;min-height:50px;padding:12px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);font-size:1rem}
+.pl-field textarea{min-height:84px;resize:vertical}
+.pl-field input:focus,.pl-field textarea:focus{outline:none;border-color:var(--brand);box-shadow:0 0 0 4px color-mix(in srgb,var(--brand) 18%,transparent)}
+.pl-field [aria-invalid="true"]{border-color:var(--coral)}
+[data-theme="dark"] .pl-field input[type="date"],[data-theme="dark"] .pl-field input[type="time"]{color-scheme:dark}
+.pl-stops{display:grid;gap:10px}
+.pl-row{display:grid;grid-template-columns:30px 1fr;gap:10px;align-items:end}
+.pl-row[data-kind=via]{grid-template-columns:30px 1fr 46px}
+.pl-dot{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-size:.78rem;font-weight:800;color:#fff;margin-bottom:10px}
 .pl-dot.start{background:#15803D}.pl-dot.end{background:#C2410C}.pl-dot.via{background:var(--gold);color:#3A2600}
-.pl-field label{display:block;font-size:.8rem;font-weight:700;color:var(--ink-2);margin-bottom:6px}
-.pl-field input{width:100%;min-height:50px;padding:12px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);font-size:1rem}
-.pl-field input:focus{outline:none;border-color:var(--brand);box-shadow:0 0 0 4px color-mix(in srgb,var(--brand) 18%,transparent)}
-.pl-field input[aria-invalid="true"]{border-color:var(--coral)}
-.pl-icon{width:46px;height:50px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface-2);display:grid;place-items:center;cursor:pointer;color:var(--brand)}
-.pl-icon:hover{border-color:var(--brand)}
-.pl-opts{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;margin:16px 0}
-.pl-check{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:.92rem;cursor:pointer;min-height:44px}
-.pl-check input{width:20px;height:20px;accent-color:var(--brand)}
-.pl-msg{margin-top:12px;font-size:.92rem;color:var(--muted);min-height:1.2em}
-.pl-msg.err{color:var(--coral);font-weight:600}
-.pl-result{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:clamp(16px,3vw,24px);box-shadow:var(--shadow)}
-.pl-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-@media (min-width:600px){.pl-stats{grid-template-columns:repeat(3,1fr)}}
-.pl-stats div{padding:14px 16px;border-radius:14px;background:var(--surface-2)}
-.pl-stats span{display:block;font-size:.76rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-.pl-stats b{display:block;font-size:1.45rem;font-family:var(--font-serif);margin-top:2px}
-.pl-price{grid-column:1/-1}
-@media (min-width:600px){.pl-price{grid-column:auto}}
-.pl-price b{font-size:1.15rem;font-family:var(--font-sans)}
-.pl-price.has b{font-size:1.3rem;font-family:var(--font-serif);color:var(--brand);line-height:1.3}
-.pl-price small{font-family:var(--font-sans);font-size:.8rem;color:var(--muted);font-weight:600}
-.pl-legs{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:8px}
-.pl-legs li{display:flex;justify-content:space-between;gap:12px;padding:10px 14px;border-radius:12px;border:1px solid var(--line);font-size:.92rem}
-.pl-legs li b{font-weight:650}
-.pl-legs li span{color:var(--muted);white-space:nowrap}
-.pl-map{height:clamp(260px,45vw,420px);border-radius:16px;overflow:hidden;margin-top:16px;background:var(--surface-2);z-index:0}
-.pl-note{font-size:.8rem;color:var(--muted);margin-top:10px}
-.pl-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:16px}
-.pl-actions .btn{flex:1 1 240px}
-.pl-quick{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:12px;padding-top:14px;border-top:1px solid var(--line)}
-.pl-quick span{font-size:.82rem;font-weight:700;color:var(--muted);width:100%}
-.pl-quick button{min-height:40px;padding:8px 13px;border-radius:999px;border:1.5px solid var(--line);background:var(--bg);font-size:.86rem;font-weight:600;cursor:pointer;color:var(--ink-2)}
-.pl-quick button:hover{border-color:var(--brand);color:var(--brand)}
+.pl-link{justify-self:start;margin-left:40px;display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:4px 10px;border-radius:999px;border:0;background:color-mix(in srgb,var(--brand) 10%,transparent);color:var(--brand);font-weight:650;font-size:.86rem;cursor:pointer}
+.pl-link .icon{width:16px;height:16px}
 .pl-x{width:46px;height:50px;border-radius:12px;border:1.5px solid var(--line);background:transparent;cursor:pointer;color:var(--coral);font-size:1.3rem}
+.pl-ac-wrap{position:relative}
+.pl-ac{position:absolute;left:0;right:0;top:100%;z-index:30;margin:6px 0 0;padding:6px;list-style:none;background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow-lg);max-height:290px;overflow:auto}
+.pl-ac li{padding:10px 12px;border-radius:10px;cursor:pointer;display:flex;gap:10px;align-items:flex-start;font-size:.95rem}
+.pl-ac li .icon{width:16px;height:16px;margin-top:3px;color:var(--brand);flex:none}
+.pl-ac li small{display:block;color:var(--muted);font-size:.8rem}
+.pl-ac li[aria-selected="true"],.pl-ac li:hover{background:var(--surface-2)}
+.pl-ac .hint{cursor:default;color:var(--muted);font-size:.85rem}
+.pl-opts{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.pl-check{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:.92rem;cursor:pointer;min-height:40px;margin-left:auto}
+.pl-check input{width:20px;height:20px;accent-color:var(--brand)}
+.pl-quick{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.pl-quick span{font-size:.8rem;font-weight:700;color:var(--muted);width:100%}
+.pl-quick button{min-height:38px;padding:7px 12px;border-radius:999px;border:1.5px solid var(--line);background:var(--bg);font-size:.84rem;font-weight:600;cursor:pointer;color:var(--ink-2)}
+.pl-quick button:hover{border-color:var(--brand);color:var(--brand)}
+.pl-msg{font-size:.92rem;color:var(--muted);margin-top:12px}
+.pl-msg:empty{display:none}
+.pl-msg.err{color:var(--coral);font-weight:600}
+.pl-mini{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;padding:12px 14px;border-radius:14px;background:color-mix(in srgb,var(--brand) 8%,var(--surface));font-weight:650}
+.pl-mini a{color:var(--brand);font-weight:600;font-size:.88rem;text-decoration:underline;text-underline-offset:3px}
+@media (min-width:980px){.pl-mini a{display:none}}
+.pl-veh{border:0;padding:0;margin:0;display:grid;gap:10px}
+.pl-veh label{position:relative;cursor:pointer}
+.pl-veh input{position:absolute;opacity:0}
+.pl-veh label > span{display:grid;grid-template-columns:1fr auto;gap:2px 12px;padding:14px 16px;border-radius:14px;border:1.5px solid var(--line);background:var(--bg);transition:border-color .15s,background .15s}
+.pl-veh b{font-size:1.05rem}
+.pl-veh small{grid-column:1;color:var(--muted);font-size:.85rem}
+.pl-veh em{grid-column:2;grid-row:1/3;align-self:center;font-style:normal;font-weight:800;color:var(--brand);text-align:right;font-size:1rem}
+.pl-veh em.q{font-weight:600;font-size:.82rem;color:var(--muted)}
+.pl-veh input:checked + span{border-color:var(--brand);background:color-mix(in srgb,var(--brand) 7%,var(--surface))}
+.pl-veh input:focus-visible + span{outline:3px solid var(--gold);outline-offset:2px}
+.pl-nav{display:flex;gap:10px;justify-content:space-between;flex-wrap:wrap}
+.pl-nav .btn{flex:1 1 160px}
+.pl-sum{margin:0;display:grid;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.pl-sum div{display:grid;grid-template-columns:110px 1fr;gap:10px;padding:10px 14px;border-bottom:1px solid var(--line);font-size:.92rem}
+.pl-sum div:last-child{border-bottom:0}
+.pl-sum dt{font-weight:700;color:var(--muted);font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;padding-top:2px}
+.pl-sum dd{margin:0;color:var(--ink)}
+.pl-mapbox{padding:14px}
+@media (min-width:980px){.pl-mapbox{position:sticky;top:calc(var(--nav-h) + 20px)}}
+.pl-maphead{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:2px 4px 10px}
+.pl-maphead span{font-size:.78rem;color:var(--muted)}
+.pl-map{height:clamp(280px,48vw,440px);border-radius:14px;overflow:hidden;background:var(--surface-2);z-index:0}
+.pl-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.pl-stats div{padding:12px 14px;border-radius:14px;background:var(--surface-2)}
+.pl-stats span{display:block;font-size:.74rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.pl-stats b{display:block;font-size:1.5rem;font-family:var(--font-serif);margin-top:2px}
+.pl-legs{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:6px}
+.pl-legs:empty{display:none}
+.pl-legs li{display:flex;justify-content:space-between;gap:12px;padding:8px 12px;border-radius:10px;border:1px solid var(--line);font-size:.88rem}
+.pl-legs li span{color:var(--muted);white-space:nowrap}
+.pl-note{font-size:.8rem;color:var(--muted);margin-top:10px}
+.pl-gmaps{display:inline-flex;align-items:center;gap:8px;margin-top:10px;font-weight:650;color:var(--brand);min-height:40px}
+.pl-gmaps .icon{width:18px;height:18px}
+.leaflet-container{font:inherit}
 
 /* Reveal animations */
 .reveal{opacity:0;transform:translateY(12px);transition:opacity .6s ease-out,transform .6s ease-out}
@@ -1480,61 +1519,98 @@ section{position:relative}
 <section class="section" id="planner" aria-labelledby="planner-title">
   <div class="wrap">
     <div class="section-head center reveal">
-      <span class="eyebrow">Trip planner</span>
-      <h2 id="planner-title">Plan your trip: distance, time &amp; route</h2>
-      <p>Enter your pickup and drop-off anywhere in Sri Lanka, add stops for a tour, and see the road distance, driving time and route on the map. Then book it in one tap.</p>
+      <span class="eyebrow">Route planning</span>
+      <h2 id="planner-title">Plan your ride: real road distance &amp; time</h2>
+      <p>Choose your pickup and drop-off, pick the date, time and vehicle, and send your booking to Avishka on WhatsApp. The route follows the real roads of Sri Lanka.</p>
     </div>
 
-    <div class="planner reveal">
-      <form class="pl-form" id="pl-form" novalidate autocomplete="off">
-        <div class="pl-stops" id="pl-stops">
-          <div class="pl-row" data-kind="start">
-            <span class="pl-dot start" aria-hidden="true">A</span>
-            <div class="pl-field">
-              <label for="pl-from">Pickup location</label>
-              <input id="pl-from" list="pl-places" placeholder="e.g. Colombo Airport (CMB)" required>
-            </div>
-            <button class="pl-icon" type="button" id="pl-geo" aria-label="Use my current location" title="Use my location"><svg class="icon"><use href="#i-pin"/></svg></button>
+    <ol class="pl-steps" aria-label="Booking steps">
+      <li class="on" data-s="1"><span>1</span>Enter ride details</li>
+      <li data-s="2"><span>2</span>Choose a vehicle</li>
+      <li data-s="3"><span>3</span>Confirm &amp; book</li>
+    </ol>
+
+    <div class="planner">
+      <form class="pl-panel" id="pl-form" novalidate autocomplete="off">
+        <!-- Step 1: ride details -->
+        <div class="pl-step" data-step="1">
+          <div class="pl-two">
+            <div class="pl-field"><label for="pl-date">Pickup date</label><input type="date" id="pl-date" required></div>
+            <div class="pl-field"><label for="pl-time">Pickup time</label><input type="time" id="pl-time" value="09:00" required></div>
           </div>
-          <div class="pl-row" data-kind="end">
-            <span class="pl-dot end" aria-hidden="true">B</span>
-            <div class="pl-field">
-              <label for="pl-to">Drop-off location</label>
-              <input id="pl-to" list="pl-places" placeholder="e.g. Tangalle" required>
+          <div class="pl-stops" id="pl-stops">
+            <div class="pl-row" data-kind="start">
+              <span class="pl-dot start" aria-hidden="true">A</span>
+              <div class="pl-field pl-ac-wrap">
+                <label for="pl-from">Pickup location</label>
+                <input id="pl-from" class="pl-place" placeholder="Hotel, airport, town…" required role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="pl-from-list">
+                <ul class="pl-ac" id="pl-from-list" role="listbox" hidden></ul>
+              </div>
             </div>
-            <button class="pl-icon" type="button" id="pl-swap" aria-label="Swap pickup and drop-off" title="Swap"><svg class="icon" style="transform:rotate(90deg)"><use href="#i-route"/></svg></button>
+            <button class="pl-link" type="button" id="pl-geo"><svg class="icon"><use href="#i-pin"/></svg>Use my location</button>
+            <div class="pl-row" data-kind="end">
+              <span class="pl-dot end" aria-hidden="true">B</span>
+              <div class="pl-field pl-ac-wrap">
+                <label for="pl-to">Drop-off location</label>
+                <input id="pl-to" class="pl-place" placeholder="Hotel, beach, town…" required role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="pl-to-list">
+                <ul class="pl-ac" id="pl-to-list" role="listbox" hidden></ul>
+              </div>
+            </div>
           </div>
+          <div class="pl-opts">
+            <button class="btn btn-outline btn-sm" type="button" id="pl-add">+ Add a stop</button>
+            <button class="btn btn-outline btn-sm" type="button" id="pl-swap">⇅ Swap</button>
+            <label class="pl-check"><input type="checkbox" id="pl-return"> Return trip</label>
+          </div>
+          <div class="pl-quick" aria-label="Popular trips">
+            <span>Popular trips:</span>
+            <button type="button" data-pl="Colombo Airport (CMB)|Tangalle">Colombo Airport → Tangalle</button>
+            <button type="button" data-pl="Tangalle|Ella">Tangalle → Ella</button>
+            <button type="button" data-pl="Tangalle|Yala National Park">Tangalle → Yala</button>
+            <button type="button" data-pl="Tangalle|Mirissa">Tangalle → Mirissa</button>
+            <button type="button" data-pl="Tangalle|Galle Fort">Tangalle → Galle</button>
+          </div>
+          <button class="btn btn-primary btn-block btn-lg" type="submit" id="pl-go"><svg class="icon"><use href="#i-route"/></svg>Show route &amp; continue</button>
         </div>
-        <div class="pl-opts">
-          <button class="btn btn-outline btn-sm" type="button" id="pl-add">+ Add a stop</button>
-          <label class="pl-check"><input type="checkbox" id="pl-return"> Return to pickup</label>
+
+        <!-- Step 2: vehicle -->
+        <div class="pl-step" data-step="2" hidden>
+          <p class="pl-mini" id="pl-mini"></p>
+          <fieldset class="pl-veh" id="pl-veh">
+            <legend class="lbl">Choose your vehicle</legend>
+            <label><input type="radio" name="veh" value="Car" checked><span><b>Car</b><small>1–3 passengers · 2 large bags</small><em data-price="car"></em></span></label>
+            <label><input type="radio" name="veh" value="SUV"><span><b>SUV</b><small>1–4 passengers · 3–4 bags</small><em data-price="suv"></em></span></label>
+            <label><input type="radio" name="veh" value="Van / shuttle"><span><b>Van / shuttle</b><small>4–8 passengers · lots of luggage</small><em data-price="van"></em></span></label>
+          </fieldset>
+          <div class="pl-two">
+            <div class="pl-field"><span class="lbl" id="pl-pax-l">Passengers</span><div class="stepper" role="group" aria-labelledby="pl-pax-l"><button type="button" data-pstep="-1" data-t="pl-pax" aria-label="Fewer passengers">−</button><output id="pl-pax" data-min="1" data-max="14">2</output><button type="button" data-pstep="1" data-t="pl-pax" aria-label="More passengers">+</button></div></div>
+            <div class="pl-field"><span class="lbl" id="pl-bags-l">Large bags</span><div class="stepper" role="group" aria-labelledby="pl-bags-l"><button type="button" data-pstep="-1" data-t="pl-bags" aria-label="Fewer bags">−</button><output id="pl-bags" data-min="0" data-max="14">2</output><button type="button" data-pstep="1" data-t="pl-bags" aria-label="More bags">+</button></div></div>
+          </div>
+          <div class="pl-nav"><button class="btn btn-outline" type="button" data-go="1">← Previous</button><button class="btn btn-primary" type="button" data-go="3">Next →</button></div>
         </div>
-        <button class="btn btn-primary btn-block btn-lg" type="submit" id="pl-go"><svg class="icon"><use href="#i-route"/></svg>Plan my trip</button>
+
+        <!-- Step 3: confirm -->
+        <div class="pl-step" data-step="3" hidden>
+          <dl class="pl-sum" id="pl-sum"></dl>
+          <div class="pl-field"><label for="pl-name">Your name <span class="req" aria-hidden="true">*</span></label><input id="pl-name" autocomplete="name" required placeholder="e.g. Sarah"></div>
+          <div class="pl-field"><label for="pl-flight">Flight number <small>(airport pickups)</small></label><input id="pl-flight" placeholder="e.g. UL 504"></div>
+          <div class="pl-field"><label for="pl-notes">Notes</label><textarea id="pl-notes" placeholder="Child seats, surfboards, stops for food…"></textarea></div>
+          <div class="pl-nav"><button class="btn btn-outline" type="button" data-go="2">← Previous</button><button class="btn btn-wa" type="button" id="pl-send"><svg class="icon"><use href="#i-wa"/></svg>Send booking on WhatsApp</button></div>
+        </div>
+
         <p class="pl-msg" id="pl-msg" role="status" aria-live="polite"></p>
-        <div class="pl-quick" aria-label="Popular trips">
-          <span>Popular trips:</span>
-          <button type="button" data-pl="Colombo Airport (CMB)|Tangalle">Colombo Airport → Tangalle</button>
-          <button type="button" data-pl="Tangalle|Ella">Tangalle → Ella</button>
-          <button type="button" data-pl="Tangalle|Yala National Park">Tangalle → Yala</button>
-          <button type="button" data-pl="Tangalle|Mirissa">Tangalle → Mirissa</button>
-          <button type="button" data-pl="Tangalle|Galle Fort">Tangalle → Galle</button>
-        </div>
-        <datalist id="pl-places"></datalist>
       </form>
 
-      <div class="pl-result" id="pl-result" hidden>
+      <div class="pl-panel pl-mapbox">
+        <div class="pl-maphead"><b>Route map</b><span id="pl-src"></span></div>
+        <div class="pl-map" id="pl-map" role="img" aria-label="Map of the planned route"></div>
         <div class="pl-stats">
-          <div><span>Total distance</span><b id="pl-km">–</b></div>
-          <div><span>Driving time</span><b id="pl-time">–</b></div>
-          <div class="pl-price" id="pl-price-box"><span id="pl-price-label">Price</span><b id="pl-price">Ask on WhatsApp</b></div>
+          <div><span>Total distance</span><b id="pl-km">0 km</b></div>
+          <div><span>Total time</span><b id="pl-dur">0 min</b></div>
         </div>
         <ol class="pl-legs" id="pl-legs"></ol>
-        <div class="pl-map" id="pl-map" role="img" aria-label="Map of the planned route"></div>
-        <p class="pl-note" id="pl-note">Distance and time are estimates for driving without stops; traffic, weather and breaks add time. Map data © OpenStreetMap contributors, routing by OSRM.</p>
-        <div class="pl-actions">
-          <button class="btn btn-wa btn-lg" type="button" id="pl-book"><svg class="icon"><use href="#i-wa"/></svg>Book this trip on WhatsApp</button>
-          <a class="btn btn-outline btn-lg" id="pl-gmaps" href="https://www.google.com/maps" target="_blank" rel="noopener"><svg class="icon"><use href="#i-map"/></svg>Open in Google Maps</a>
-        </div>
+        <p class="pl-note" id="pl-note">Road distance and driving time along the actual route, without stops. Prices can be negotiated and may change from day to day, but we will always give you an affordable rate.</p>
+        <a class="pl-gmaps" id="pl-gmaps" href="https://www.google.com/maps" target="_blank" rel="noopener" hidden><svg class="icon"><use href="#i-map"/></svg>Open this route in Google Maps</a>
       </div>
     </div>
   </div>
@@ -2373,7 +2449,7 @@ const CONFIG = {
     });
   }
 
-  /* ---- Trip planner: OpenStreetMap search (Nominatim) + road routing (OSRM) + Leaflet map ---- */
+  /* ---- Trip planner: 3 steps, real road routing (OSRM / Valhalla), place suggestions (Photon / Nominatim), Leaflet map ---- */
   const plForm = $("#pl-form");
   if (plForm) {
     const PLACES = {
@@ -2389,181 +2465,307 @@ const CONFIG = {
       "Dambulla": [7.8567, 80.6492], "Polonnaruwa": [7.9403, 81.0188], "Anuradhapura": [8.3114, 80.4037], "Trincomalee": [8.5874, 81.2152],
       "Arugam Bay": [6.8400, 81.8360]
     };
-    // Avishka's set prices (car, van/shuttle) for direct trips; matched in either direction.
+    // Avishka's set prices [car, van/shuttle] for direct trips, matched in either direction.
     const PRICES = [
-      [/tangalle|goyambokka/i, /colombo airport|cmb|katunayake|bandaranaike/i, 25000, 33000],
-      [/tangalle|goyambokka/i, /mattala|hri/i, 15000, 18000],
+      [/tangalle|goyambokka/i, /colombo airport|\bcmb\b|katunayake|bandaranaike/i, 25000, 33000],
+      [/tangalle|goyambokka/i, /mattala|\bhri\b/i, 15000, 18000],
       [/tangalle|goyambokka/i, /galle/i, 16000, 19000],
       [/tangalle|goyambokka/i, /mirissa/i, 9000, 13000],
       [/tangalle|goyambokka/i, /weligama/i, 10000, 14000],
       [/tangalle|goyambokka/i, /yala|tissa/i, 20000, 23000],
-      [/tangalle|goyambokka/i, /udawalawe|udawalawa/i, 15000, 18000],
+      [/tangalle|goyambokka/i, /udawalaw/i, 15000, 18000],
       [/tangalle|goyambokka/i, /\bella\b/i, 23000, 27000]
     ];
-    $("#pl-places").innerHTML = Object.keys(PLACES).map(n => '<option value="' + n + '">').join("");
-
-    const stopsBox = $("#pl-stops"), msg = $("#pl-msg"), result = $("#pl-result");
+    const LK_BOX = "79.4,5.8,82.0,9.9";                       // Sri Lanka bounding box (lon,lat,lon,lat)
+    const stopsBox = $("#pl-stops"), msg = $("#pl-msg");
     const say = (t, err) => { msg.textContent = t; msg.className = "pl-msg" + (err ? " err" : ""); };
-    const fmtKm = (m) => (m / 1000 >= 100 ? Math.round(m / 1000) : (m / 1000).toFixed(1)) + " km";
+    const fmtKm = (m) => (m / 1000 >= 100 ? Math.round(m / 1000) : (Math.round(m / 100) / 10)) + " km";
     const fmtTime = (s) => { const mins = Math.max(5, Math.round(s / 60 / 5) * 5); const h = Math.floor(mins / 60), mm = mins % 60; return [h ? h + " h" : "", mm ? mm + " min" : ""].filter(Boolean).join(" "); };
-    const cache = new Map();
-    let lastGeo = 0, myLoc = null;
+    const lkr = (n) => "LKR " + n.toLocaleString("en-US");
+    const withTimeout = (url, ms, opts) => { const c = new AbortController(); const t = setTimeout(() => c.abort(), ms); return fetch(url, Object.assign({ signal: c.signal }, opts || {})).finally(() => clearTimeout(t)); };
+    const today = new Date(); today.setMinutes(today.getMinutes() - today.getTimezoneOffset());
+    $("#pl-date").min = $("#pl-date").value = today.toISOString().slice(0, 10);
 
-    const findLocal = (q) => {
+    /* ---------- place suggestions ---------- */
+    const localMatches = (q) => {
       const k = q.trim().toLowerCase();
-      if (!k) return null;
-      const exact = Object.keys(PLACES).find(n => n.toLowerCase() === k);
-      const part = exact || Object.keys(PLACES).find(n => n.toLowerCase().startsWith(k) || k.startsWith(n.toLowerCase().split(" (")[0]));
-      return part ? { name: part, lat: PLACES[part][0], lng: PLACES[part][1] } : null;
+      return Object.keys(PLACES).filter(n => n.toLowerCase().includes(k)).sort((a, b) => a.toLowerCase().indexOf(k) - b.toLowerCase().indexOf(k)).slice(0, 5)
+        .map(n => ({ name: n, sub: "Sri Lanka", lat: PLACES[n][0], lng: PLACES[n][1] }));
     };
-    const geocode = async (q) => {
-      if (q === "My location" && myLoc) return myLoc;
-      const local = findLocal(q);
-      if (local) return local;
-      const key = q.trim().toLowerCase();
-      if (cache.has(key)) return cache.get(key);
-      const wait = 1100 - (Date.now() - lastGeo);              // Nominatim: max 1 request per second
-      if (wait > 0) await new Promise(r => setTimeout(r, wait));
-      lastGeo = Date.now();
-      const url = "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&countrycodes=lk&accept-language=en&q=" + encodeURIComponent(q);
-      const res = await fetch(url, { headers: { "Accept": "application/json" } });
-      if (!res.ok) throw new Error("search");
-      const j = await res.json();
-      if (!j.length) return null;
-      const hit = { name: q.trim(), lat: +j[0].lat, lng: +j[0].lon };
-      cache.set(key, hit);
-      return hit;
+    const photon = async (q, limit) => {
+      const r = await withTimeout("https://photon.komoot.io/api/?lang=en&limit=" + limit + "&bbox=" + LK_BOX + "&q=" + encodeURIComponent(q), 6000);
+      if (!r.ok) throw new Error("photon");
+      const j = await r.json();
+      return (j.features || []).filter(f => (f.properties.countrycode || "LK") === "LK").map(f => {
+        const p = f.properties, sub = [p.street, p.district || p.city || p.town || p.village, p.county || p.state].filter(Boolean).filter((v, i, a) => a.indexOf(v) === i && v !== p.name).join(", ");
+        return { name: p.name || q, sub: sub || "Sri Lanka", lat: f.geometry.coordinates[1], lng: f.geometry.coordinates[0] };
+      });
     };
-    const haversine = (a, b) => {
-      const R = 6371000, toR = (d) => d * Math.PI / 180;
-      const dLat = toR(b.lat - a.lat), dLng = toR(b.lng - a.lng);
-      const x = Math.sin(dLat / 2) ** 2 + Math.cos(toR(a.lat)) * Math.cos(toR(b.lat)) * Math.sin(dLng / 2) ** 2;
-      return 2 * R * Math.asin(Math.sqrt(x));
+    let lastNom = 0;
+    const nominatim = async (q) => {
+      const wait = 1100 - (Date.now() - lastNom); if (wait > 0) await new Promise(r => setTimeout(r, wait)); lastNom = Date.now();
+      const r = await withTimeout("https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&countrycodes=lk&accept-language=en&q=" + encodeURIComponent(q), 8000, { headers: { Accept: "application/json" } });
+      if (!r.ok) throw new Error("nominatim");
+      const j = await r.json();
+      return j.length ? { name: q.trim(), sub: "", lat: +j[0].lat, lng: +j[0].lon } : null;
     };
-    const route = async (pts) => {
-      try {
-        const url = "https://router.project-osrm.org/route/v1/driving/" + pts.map(p => p.lng + "," + p.lat).join(";") + "?overview=full&geometries=geojson";
-        const res = await fetch(url);
-        if (!res.ok) throw new Error("route");
-        const j = await res.json();
-        if (j.code !== "Ok" || !j.routes.length) throw new Error("route");
-        const r = j.routes[0];
-        // Sri Lankan roads are slower than the routing engine's defaults: allow ~20% extra time.
-        return { exact: true, distance: r.distance, duration: r.duration * 1.2, legs: r.legs.map(l => ({ distance: l.distance, duration: l.duration * 1.2 })),
-          line: r.geometry.coordinates.map(c => [c[1], c[0]]) };
-      } catch (e) {
-        const legs = [];
-        for (let i = 1; i < pts.length; i++) { const d = haversine(pts[i - 1], pts[i]) * 1.35; legs.push({ distance: d, duration: d / 1000 / 42 * 3600 }); }
-        return { exact: false, distance: legs.reduce((a, l) => a + l.distance, 0), duration: legs.reduce((a, l) => a + l.duration, 0), legs, line: pts.map(p => [p.lat, p.lng]) };
-      }
+    const resolve = async (input) => {
+      if (input.dataset.lat && input.dataset.label === input.value) return { name: input.value, lat: +input.dataset.lat, lng: +input.dataset.lng };
+      const q = input.value.trim();
+      const exact = Object.keys(PLACES).find(n => n.toLowerCase() === q.toLowerCase()) || Object.keys(PLACES).find(n => n.toLowerCase().startsWith(q.toLowerCase()));
+      if (exact) return { name: exact, lat: PLACES[exact][0], lng: PLACES[exact][1] };
+      try { const p = await photon(q, 1); if (p.length) return { name: q, lat: p[0].lat, lng: p[0].lng }; } catch (e) {}
+      try { return await nominatim(q); } catch (e) { return null; }
     };
+    const setPlace = (input, place) => {
+      input.value = place.name; input.dataset.label = place.name; input.dataset.lat = place.lat; input.dataset.lng = place.lng;
+      input.setAttribute("aria-invalid", "false");
+      previewMarkers();
+    };
+    const pin = '<svg class="icon"><use href="#i-pin"/></svg>';
+    const attachAC = (input) => {
+      const list = document.getElementById(input.getAttribute("aria-controls"));
+      let items = [], active = -1, timer = null, seq = 0;
+      const close = () => { list.hidden = true; input.setAttribute("aria-expanded", "false"); input.removeAttribute("aria-activedescendant"); active = -1; };
+      const render = (arr, note) => {
+        items = arr;
+        list.innerHTML = arr.map((it, i) => '<li role="option" id="' + list.id + '-' + i + '" data-i="' + i + '">' + pin + '<span>' + esc2(it.name) + (it.sub ? '<small>' + esc2(it.sub) + '</small>' : '') + '</span></li>').join("") +
+          (note ? '<li class="hint" role="presentation">' + note + '</li>' : "");
+        list.hidden = !arr.length && !note; input.setAttribute("aria-expanded", String(!list.hidden));
+      };
+      const pick = (i) => { if (items[i]) { setPlace(input, items[i]); close(); } };
+      input.addEventListener("input", () => {
+        delete input.dataset.lat; delete input.dataset.label;
+        const q = input.value.trim(); clearTimeout(timer);
+        if (!q) { close(); return; }
+        const local = localMatches(q);
+        render(local, q.length >= 3 ? "Searching places…" : "");
+        if (q.length < 3) return;
+        const my = ++seq;
+        timer = setTimeout(async () => {
+          let remote = [];
+          try { remote = await photon(q, 6); } catch (e) {}
+          if (my !== seq) return;
+          const seen = new Set(local.map(l => l.name.toLowerCase()));
+          render(local.concat(remote.filter(r => !seen.has(r.name.toLowerCase()))).slice(0, 8), remote.length || local.length ? "" : "No matches yet. Keep typing, or try a nearby town.");
+        }, 280);
+      });
+      input.addEventListener("keydown", e => {
+        if (list.hidden || !items.length) return;
+        if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+          e.preventDefault(); active = (active + (e.key === "ArrowDown" ? 1 : -1) + items.length) % items.length;
+          $$("li[role=option]", list).forEach((li, i) => li.setAttribute("aria-selected", String(i === active)));
+          input.setAttribute("aria-activedescendant", list.id + "-" + active);
+        } else if (e.key === "Enter" && active >= 0) { e.preventDefault(); pick(active); }
+        else if (e.key === "Escape") close();
+      });
+      list.addEventListener("mousedown", e => { const li = e.target.closest("li[data-i]"); if (li) { e.preventDefault(); pick(+li.dataset.i); } });
+      input.addEventListener("blur", () => setTimeout(close, 150));
+    };
+    $$(".pl-place", plForm).forEach(attachAC);
 
-    // Map (Leaflet is loaded only when the first trip is planned)
+    /* ---------- road routing: try several free routing services, never straight lines ---------- */
+    const decode6 = (str) => { let i = 0, lat = 0, lng = 0; const out = [];
+      while (i < str.length) { for (const k of [0, 1]) { let b, shift = 0, res = 0; do { b = str.charCodeAt(i++) - 63; res |= (b & 31) << shift; shift += 5; } while (b >= 32); const d = res & 1 ? ~(res >> 1) : res >> 1; if (k === 0) lat += d; else lng += d; } out.push([lat / 1e6, lng / 1e6]); }
+      return out; };
+    const osrm = (base, label) => async (pts) => {
+      const r = await withTimeout(base + pts.map(p => p.lng.toFixed(6) + "," + p.lat.toFixed(6)).join(";") + "?overview=full&geometries=geojson", 9000);
+      if (!r.ok) throw new Error(label);
+      const j = await r.json();
+      if (j.code !== "Ok" || !j.routes || !j.routes.length) throw new Error(label);
+      const rt = j.routes[0], f = 1.15;                       // allow for slower Sri Lankan roads
+      return { src: label, distance: rt.distance, duration: rt.duration * f, legs: rt.legs.map(l => ({ distance: l.distance, duration: l.duration * f })), line: rt.geometry.coordinates.map(c => [c[1], c[0]]) };
+    };
+    const valhalla = async (pts) => {
+      const body = { locations: pts.map(p => ({ lat: p.lat, lon: p.lng })), costing: "auto", units: "kilometers" };
+      const r = await withTimeout("https://valhalla1.openstreetmap.de/route?json=" + encodeURIComponent(JSON.stringify(body)), 10000);
+      if (!r.ok) throw new Error("valhalla");
+      const j = await r.json(), t = j.trip;
+      if (!t || t.status !== 0) throw new Error("valhalla");
+      return { src: "Valhalla", distance: t.summary.length * 1000, duration: t.summary.time * 1.05,
+        legs: t.legs.map(l => ({ distance: l.summary.length * 1000, duration: l.summary.time * 1.05 })), line: t.legs.flatMap(l => decode6(l.shape)) };
+    };
+    const ROUTERS = [osrm("https://routing.openstreetmap.de/routed-car/route/v1/driving/", "OSRM (FOSSGIS)"), osrm("https://router.project-osrm.org/route/v1/driving/", "OSRM"), valhalla];
+    const route = async (pts) => { for (const fn of ROUTERS) { try { return await fn(pts); } catch (e) {} } return null; };
+
+    /* ---------- map ---------- */
     let map = null, layer = null;
     const loadLeaflet = () => window.L ? Promise.resolve() : new Promise((ok, no) => {
       const css = document.createElement("link"); css.rel = "stylesheet"; css.href = "/assets/vendor/leaflet/leaflet.css"; document.head.appendChild(css);
       const sc = document.createElement("script"); sc.src = "/assets/vendor/leaflet/leaflet.js"; sc.onload = ok; sc.onerror = no; document.head.appendChild(sc);
     });
-    const draw = async (pts, r) => {
+    let mapReady = null;                                       // created once, even if several callers ask at the same time
+    const ensureMap = () => mapReady || (mapReady = loadLeaflet().then(() => {
+      map = L.map("pl-map", { scrollWheelZoom: false, zoomControl: true, zoomAnimation: false, fadeAnimation: false, markerZoomAnimation: false }).setView([7.75, 80.75], 7);
+      L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 19, attribution: "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors" }).addTo(map);
+      layer = L.layerGroup().addTo(map);
+      return map;
+    }).catch(e => { mapReady = null; throw e; }));
+    if ("IntersectionObserver" in window) {
+      const mo = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) { mo.disconnect(); ensureMap().catch(() => {}); } }, { rootMargin: "300px" });
+      mo.observe($("#pl-map"));
+    }
+    const dotIcon = (color) => ({ radius: 9, color: "#fff", weight: 3, fillOpacity: 1, fillColor: color });
+    const markerColor = (i, n) => i === 0 ? "#15803D" : i === n - 1 ? "#C2410C" : "#D99A2B";
+    const previewMarkers = async () => {
       try {
-        await loadLeaflet();
-        if (!map) {
-          map = L.map("pl-map", { scrollWheelZoom: false });
-          L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 18, attribution: "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors" }).addTo(map);
-        }
-        if (layer) layer.remove();
-        layer = L.layerGroup().addTo(map);
-        const line = L.polyline(r.line, { color: "#0F766E", weight: 5, opacity: .85, dashArray: r.exact ? null : "8 8" }).addTo(layer);
-        pts.forEach((p, i) => {
-          const last = i === pts.length - 1, first = i === 0;
-          L.circleMarker([p.lat, p.lng], { radius: first || last ? 9 : 7, color: "#fff", weight: 3, fillOpacity: 1,
-            fillColor: first ? "#15803D" : last ? "#C2410C" : "#D99A2B" }).addTo(layer).bindTooltip(p.name);
-        });
-        map.invalidateSize();
-        map.fitBounds(line.getBounds(), { padding: [30, 30] });
-      } catch (e) { $("#pl-map").hidden = true; }
+        await ensureMap();
+        const ins = [$("#pl-from"), ...$$(".pl-row[data-kind=via] input", stopsBox), $("#pl-to")].filter(i => i.dataset.lat);
+        if (!ins.length) return;
+        layer.clearLayers();
+        ins.forEach(i => L.circleMarker([+i.dataset.lat, +i.dataset.lng], dotIcon(i.id === "pl-from" ? "#15803D" : i.id === "pl-to" ? "#C2410C" : "#D99A2B")).addTo(layer).bindTooltip(i.value));
+        map.invalidateSize(); if (ins.length === 1) map.setView([+ins[0].dataset.lat, +ins[0].dataset.lng], 12, { animate: false }); else map.fitBounds(ins.map(i => [+i.dataset.lat, +i.dataset.lng]), { padding: [40, 40], animate: false });
+      } catch (e) {}
+    };
+    const drawRoute = async (pts, r) => {
+      try {
+        await ensureMap();
+        layer.clearLayers();
+        const line = L.polyline(r.line, { color: "#0F766E", weight: 5, opacity: .9 }).addTo(layer);
+        pts.forEach((p, i) => L.circleMarker([p.lat, p.lng], dotIcon(markerColor(i, pts.length))).addTo(layer).bindTooltip(p.name));
+        map.invalidateSize(); map.fitBounds(line.getBounds(), { padding: [30, 30], animate: false });
+      } catch (e) {}
     };
 
-    // Stops
-    let stopCount = 0;
+    /* ---------- stops, swap, location, quick trips ---------- */
+    let viaN = 0;
     const renumber = () => $$(".pl-row[data-kind=via]", stopsBox).forEach((r, i) => { r.querySelector(".pl-dot").textContent = i + 1; });
-    $("#pl-add").addEventListener("click", () => {
-      if ($$(".pl-row[data-kind=via]", stopsBox).length >= 5) { say("You can add up to 5 stops. For longer tours, send your plan on WhatsApp.", false); return; }
-      const id = "pl-via-" + (++stopCount);
-      const row = document.createElement("div");
+    const addStop = (val) => {
+      if ($$(".pl-row[data-kind=via]", stopsBox).length >= 5) { say("Up to 5 stops can be added. For longer tours, send your plan on WhatsApp."); return null; }
+      const id = "pl-via-" + (++viaN), row = document.createElement("div");
       row.className = "pl-row"; row.dataset.kind = "via";
-      row.innerHTML = '<span class="pl-dot via" aria-hidden="true"></span><div class="pl-field"><label for="' + id + '">Stop</label>' +
-        '<input id="' + id + '" list="pl-places" placeholder="e.g. Galle Fort"></div>' +
-        '<button class="pl-x" type="button" aria-label="Remove this stop">×</button>';
+      row.innerHTML = '<span class="pl-dot via" aria-hidden="true"></span><div class="pl-field pl-ac-wrap"><label for="' + id + '">Stop</label>' +
+        '<input id="' + id + '" class="pl-place" placeholder="e.g. Galle Fort" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="' + id + '-list">' +
+        '<ul class="pl-ac" id="' + id + '-list" role="listbox" hidden></ul></div><button class="pl-x" type="button" aria-label="Remove this stop">×</button>';
       stopsBox.insertBefore(row, stopsBox.querySelector("[data-kind=end]"));
-      row.querySelector(".pl-x").addEventListener("click", () => { row.remove(); renumber(); });
-      renumber(); row.querySelector("input").focus();
+      attachAC(row.querySelector("input"));
+      row.querySelector(".pl-x").addEventListener("click", () => { stopsBox.removeChild(row); renumber(); previewMarkers(); });
+      renumber();
+      if (val) row.querySelector("input").value = val;
+      return row.querySelector("input");
+    };
+    $("#pl-add").addEventListener("click", () => { const i = addStop(); if (i) i.focus(); });
+    $("#pl-swap").addEventListener("click", () => {
+      const a = $("#pl-from"), b = $("#pl-to"), keys = ["lat", "lng", "label"];
+      const da = keys.map(k => a.dataset[k]), db = keys.map(k => b.dataset[k]);
+      [a.value, b.value] = [b.value, a.value];
+      keys.forEach((k, i) => { if (db[i] !== undefined) a.dataset[k] = db[i]; else delete a.dataset[k]; if (da[i] !== undefined) b.dataset[k] = da[i]; else delete b.dataset[k]; });
+      previewMarkers();
+    });
+    $("#pl-geo").addEventListener("click", () => {
+      if (!navigator.geolocation) { say("Your browser can't share its location. Please type the pickup place.", true); return; }
+      say("Finding your location…");
+      navigator.geolocation.getCurrentPosition(pos => {
+        setPlace($("#pl-from"), { name: "My location", lat: pos.coords.latitude, lng: pos.coords.longitude });
+        say("Pickup set to your current location.");
+      }, () => say("Location permission was refused. Please type the pickup place.", true), { enableHighAccuracy: true, timeout: 10000 });
     });
     $$(".pl-quick button", plForm).forEach(btn => btn.addEventListener("click", () => {
       const [a, b] = btn.dataset.pl.split("|");
-      $$(".pl-row[data-kind=via]", stopsBox).forEach(row => stopsBox.removeChild(row));
-      $("#pl-from").value = a; $("#pl-to").value = b; $("#pl-return").checked = false;
+      $$(".pl-row[data-kind=via]", stopsBox).forEach(r => stopsBox.removeChild(r));
+      setPlace($("#pl-from"), { name: a, lat: PLACES[a][0], lng: PLACES[a][1] });
+      setPlace($("#pl-to"), { name: b, lat: PLACES[b][0], lng: PLACES[b][1] });
+      $("#pl-return").checked = false;
       if (plForm.requestSubmit) plForm.requestSubmit(); else $("#pl-go").click();
     }));
-    $("#pl-swap").addEventListener("click", () => { const a = $("#pl-from"), b = $("#pl-to"); [a.value, b.value] = [b.value, a.value]; });
-    $("#pl-geo").addEventListener("click", () => {
-      if (!navigator.geolocation) { say("Your browser can't share its location. Type the place instead.", true); return; }
-      say("Finding your location…");
-      navigator.geolocation.getCurrentPosition(pos => {
-        myLoc = { name: "My location", lat: pos.coords.latitude, lng: pos.coords.longitude };
-        $("#pl-from").value = "My location"; say("Using your current location as the pickup.");
-      }, () => say("Location permission was refused. Type your pickup place instead.", true), { enableHighAccuracy: true, timeout: 10000 });
-    });
 
+    /* ---------- steps ---------- */
     let plan = null;
+    const goStep = (n) => {
+      $$(".pl-step", plForm).forEach(s => { s.hidden = s.dataset.step !== String(n); });
+      $$(".pl-steps li").forEach(li => { li.classList.toggle("on", li.dataset.s === String(n)); li.classList.toggle("done", +li.dataset.s < n); });
+      say("");
+      if (n === 3) renderSummary();
+      const head = $(".pl-steps"); if (head && head.getBoundingClientRect().top < 0) head.scrollIntoView({ behavior: "smooth", block: "start" });
+    };
+    $$("[data-go]", plForm).forEach(b => b.addEventListener("click", () => goStep(+b.dataset.go)));
+    plForm.addEventListener("click", e => {
+      const b = e.target.closest("[data-pstep]"); if (!b) return;
+      const o = document.getElementById(b.dataset.t);
+      o.textContent = Math.min(+o.dataset.max, Math.max(+o.dataset.min, +o.textContent + +b.dataset.pstep));
+      if (b.dataset.t === "pl-pax" && +o.textContent >= 4 && $("input[name=veh]:checked").value === "Car") $("input[name=veh][value='Van / shuttle']").checked = true;
+    });
+    const priceFor = (pts) => {
+      if (pts.length !== 2 && !(pts.length === 3 && $("#pl-return").checked)) return null;
+      const a = pts[0].name, b = pts[1].name;
+      return PRICES.find(([x, y]) => (x.test(a) && y.test(b)) || (x.test(b) && y.test(a))) || null;
+    };
+
     plForm.addEventListener("submit", async e => {
       e.preventDefault();
-      const inputs = [$("#pl-from"), ...$$(".pl-row[data-kind=via] input", stopsBox), $("#pl-to")].filter((i, n, arr) => i.value.trim() || n === 0 || n === arr.length - 1);
+      const ins = [$("#pl-from"), ...$$(".pl-row[data-kind=via] input", stopsBox).filter(i => i.value.trim()), $("#pl-to")];
       let bad = null;
-      inputs.forEach(i => { const no = !i.value.trim(); i.setAttribute("aria-invalid", no ? "true" : "false"); if (no && !bad) bad = i; });
-      if (bad) { say("Please enter a pickup and a drop-off location.", true); bad.focus(); return; }
-      const go = $("#pl-go"); go.disabled = true; say("Finding places and planning the route…");
+      [$("#pl-date"), $("#pl-time"), ...ins].forEach(i => { const no = !i.value.trim(); i.setAttribute("aria-invalid", no ? "true" : "false"); if (no && !bad) bad = i; });
+      if (bad) { say(bad.type === "date" || bad.type === "time" ? "Please choose the pickup date and time." : "Please enter the pickup and drop-off locations.", true); bad.focus(); return; }
+      const go = $("#pl-go"); go.disabled = true; say("Finding the best road route…");
       try {
         const pts = [];
-        for (const i of inputs) {
-          const hit = await geocode(i.value);
-          if (!hit) { i.setAttribute("aria-invalid", "true"); say("We couldn't find “" + i.value + "” in Sri Lanka. Try a nearby town or pick from the list.", true); i.focus(); return; }
-          pts.push(hit);
+        for (const i of ins) {
+          const p = await resolve(i);
+          if (!p) { i.setAttribute("aria-invalid", "true"); say("We couldn't find “" + i.value + "” in Sri Lanka. Pick a suggestion from the list or try a nearby town.", true); i.focus(); return; }
+          if (!i.dataset.lat) setPlace(i, p);
+          pts.push(p);
         }
         if ($("#pl-return").checked) pts.push(Object.assign({}, pts[0]));
         const r = await route(pts);
-        plan = { pts, r };
-        $("#pl-km").textContent = (r.exact ? "" : "≈ ") + fmtKm(r.distance);
-        $("#pl-time").textContent = "≈ " + fmtTime(r.duration);
-        $("#pl-legs").innerHTML = r.legs.map((l, i) => '<li><b>' + esc2(pts[i].name) + ' → ' + esc2(pts[i + 1].name) + '</b><span>' + fmtKm(l.distance) + ' · ' + fmtTime(l.duration) + '</span></li>').join("");
-        // Set price for direct trips that match Avishka's routes
-        const box = $("#pl-price-box"), a = pts[0].name, b = pts[pts.length - 1].name;
-        const direct = pts.length === 2;
-        const hit = direct && PRICES.find(([x, y]) => (x.test(a) && y.test(b)) || (x.test(b) && y.test(a)));
-        box.classList.toggle("has", !!hit);
-        $("#pl-price-label").textContent = hit ? "Price (per vehicle)" : "Price";
-        $("#pl-price").innerHTML = hit ? "LKR " + hit[2].toLocaleString("en-US") + " <small>car</small><br>LKR " + hit[3].toLocaleString("en-US") + " <small>van / shuttle</small>" : "Best price on WhatsApp";
-        $("#pl-note").textContent = (r.exact ? "Road distance and time are estimates for driving without stops; traffic, weather and breaks add time." :
-          "The online route service is busy, so these are straight-line estimates. Avishka will confirm the exact route.") +
-          " Prices can be negotiated and may change from day to day, but we will always give you an affordable rate. Map data © OpenStreetMap contributors" + (r.exact ? ", routing by OSRM." : ".");
-        const enc = (p) => encodeURIComponent(p.name === "My location" ? p.lat + "," + p.lng : p.name + ", Sri Lanka");
-        const g = "https://www.google.com/maps/dir/?api=1&travelmode=driving&origin=" + enc(pts[0]) + "&destination=" + enc(pts[pts.length - 1]) +
-          (pts.length > 2 ? "&waypoints=" + pts.slice(1, -1).map(enc).join("%7C") : "");
-        $("#pl-gmaps").href = g;
-        result.hidden = false; $("#pl-map").hidden = false;
-        say("");
-        await draw(pts, r);
-        if (window.innerWidth < 980) result.scrollIntoView({ behavior: "smooth", block: "start" });
+        if (!r) {
+          plan = null; $("#pl-km").textContent = "0 km"; $("#pl-dur").textContent = "0 min"; $("#pl-src").textContent = ""; $("#pl-legs").innerHTML = ""; $("#pl-gmaps").hidden = true;
+          if (layer) layer.clearLayers(); previewMarkers();
+          say("The road-route service is busy right now. Please try again in a moment, or send your trip on WhatsApp and Avishka will reply with the distance and price.", true); return;
+        }
+        plan = { pts, r, price: priceFor(pts) };
+        $("#pl-km").textContent = fmtKm(r.distance);
+        $("#pl-dur").textContent = fmtTime(r.duration);
+        $("#pl-src").textContent = "Road route · " + r.src;
+        $("#pl-legs").innerHTML = pts.length > 2 ? r.legs.map((l, i) => '<li><b>' + esc2(pts[i].name) + ' → ' + esc2(pts[i + 1].name) + '</b><span>' + fmtKm(l.distance) + ' · ' + fmtTime(l.duration) + '</span></li>').join("") : "";
+        const enc = (p) => encodeURIComponent(p.name === "My location" ? p.lat + "," + p.lng : p.lat.toFixed(6) + "," + p.lng.toFixed(6));
+        const g = $("#pl-gmaps"); g.hidden = false;
+        g.href = "https://www.google.com/maps/dir/?api=1&travelmode=driving&origin=" + enc(pts[0]) + "&destination=" + enc(pts[pts.length - 1]) + (pts.length > 2 ? "&waypoints=" + pts.slice(1, -1).map(enc).join("%7C") : "");
+        const pr = plan.price, ret = $("#pl-return").checked;
+        const show = (k, v) => { const el = $("[data-price=" + k + "]"); el.className = v ? "" : "q"; el.textContent = v ? lkr(v) + (ret ? " each way" : "") : "Quote on WhatsApp"; };
+        show("car", pr && pr[2]); show("suv", null); show("van", pr && pr[3]);
+        $("#pl-mini").innerHTML = '<span>' + esc2(pts[0].name) + ' → ' + esc2(ret ? pts[0].name + " (return)" : pts[pts.length - 1].name) + ': ' + fmtKm(r.distance) + ' by road · ' + fmtTime(r.duration) + '</span><a href="#pl-map">See route map ↓</a>';
+        await drawRoute(pts, r);
+        goStep(2);
       } catch (err) {
-        say("Sorry, the trip planner couldn't connect. Please check your internet connection, or send your trip on WhatsApp.", true);
+        say("Sorry, something went wrong. Please check your connection, or send your trip on WhatsApp.", true);
       } finally { go.disabled = false; }
     });
-    $("#pl-book").addEventListener("click", () => {
-      if (!plan) return;
-      const { pts, r } = plan, n = pts.map(p => p.name === "My location" ? "my location (" + p.lat.toFixed(5) + ", " + p.lng.toFixed(5) + ")" : p.name);
-      const stops = n.slice(1, -1);
-      const notes = (stops.length ? "Stops: " + stops.join(" → ") + ". " : "") + "Planned route: " + fmtKm(r.distance) + ", about " + fmtTime(r.duration) + " driving" + ($("#pl-return").checked ? " (return trip)" : "") + ".";
-      openBooking({ dataset: { book: "taxi", from: n[0], to: $("#pl-return").checked ? n[0] + " (return)" : n[n.length - 1], notes } });
+
+    const tripLines = () => {
+      const { pts, r } = plan, ret = $("#pl-return").checked;
+      const names = pts.map(p => p.name === "My location" ? "My location (" + p.lat.toFixed(5) + ", " + p.lng.toFixed(5) + ")" : p.name);
+      const veh = $("input[name=veh]:checked").value, pr = plan.price;
+      const price = pr ? (veh === "Car" ? pr[2] : veh === "Van / shuttle" ? pr[3] : null) : null;
+      return [
+        ["Pickup", names[0]],
+        ...(ret ? names.slice(1, -1) : names.slice(1, -1)).map((n, i) => ["Stop " + (i + 1), n]).filter(x => !(ret && x[1] === names[0])),
+        ["Drop-off", ret ? names[0] + " (return trip)" : names[names.length - 1]],
+        ["Date", niceDate($("#pl-date").value) + " at " + $("#pl-time").value],
+        ["Vehicle", veh],
+        ["Passengers", $("#pl-pax").textContent + " · " + $("#pl-bags").textContent + " large bags"],
+        ["Route", fmtKm(r.distance) + " by road, about " + fmtTime(r.duration) + " driving"],
+        ...(price ? [["Price", lkr(price) + (ret ? " each way" : "") + " (website price)"]] : [])
+      ];
+    };
+    const renderSummary = () => {
+      if (!plan) { goStep(1); return; }
+      $("#pl-sum").innerHTML = tripLines().map(([k, v]) => '<div><dt>' + esc2(k) + '</dt><dd>' + esc2(v) + '</dd></div>').join("");
+      try { if (!$("#pl-name").value) $("#pl-name").value = localStorage.getItem("avish-name") || ""; } catch (e) {}
+    };
+    $("#pl-send").addEventListener("click", () => {
+      const name = $("#pl-name");
+      if (!name.value.trim()) { name.setAttribute("aria-invalid", "true"); say("Please enter your name.", true); name.focus(); return; }
+      name.setAttribute("aria-invalid", "false");
+      try { localStorage.setItem("avish-name", name.value.trim()); } catch (e) {}
+      const lines = ["Hi " + CONFIG.driverName + ", I'd like to book a taxi.", ""].concat(tripLines().map(([k, v]) => "• " + k + ": " + v));
+      if ($("#pl-flight").value.trim()) lines.push("• Flight: " + $("#pl-flight").value.trim());
+      if ($("#pl-notes").value.trim()) lines.push("", "Notes: " + $("#pl-notes").value.trim());
+      lines.push("", "Name: " + name.value.trim());
+      const url = waUrl(lines.join("\n"));
+      const w = window.open(url, "_blank", "noopener");
+      if (!w) window.location.href = url;
+      say("WhatsApp is opening with your booking. Just press send.");
     });
   }
 

@@ -78,6 +78,115 @@ const CONFIG = {
     lb.addEventListener("touchend", e => { if (x0 === null) return; const dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 50) showShot(cur + (dx < 0 ? 1 : -1)); x0 = null; });
   }
 
+  /* ---- Place suggestions for every location field (built-in places + Photon / OpenStreetMap search) ---- */
+  const SL_PLACES = {
+    "Tangalle": [6.0243, 80.7941], "Goyambokka": [6.0136, 80.7778], "Medaketiya": [6.0300, 80.8050], "Marakolliya": [6.0400, 80.8150],
+    "Rekawa": [6.0453, 80.8458], "Kalametiya": [6.0800, 80.9400], "Hiriketiya": [5.9636, 80.7097], "Dikwella": [5.9667, 80.6950],
+    "Talalla": [5.9500, 80.6150], "Beliatta": [6.0480, 80.7340], "Hummanaya Blowhole (Kudawella)": [5.9739, 80.7290], "Mulkirigala": [6.1200, 80.7380],
+    "Matara": [5.9485, 80.5353], "Polhena": [5.9380, 80.5150], "Mirissa": [5.9483, 80.4716], "Weligama": [5.9744, 80.4295],
+    "Midigama": [5.9640, 80.3890], "Ahangama": [5.9733, 80.3669], "Koggala": [5.9930, 80.3260], "Habaraduwa": [5.9950, 80.2990],
+    "Unawatuna": [6.0100, 80.2490], "Galle Fort": [6.0262, 80.2170], "Hikkaduwa": [6.1395, 80.1063], "Ambalangoda": [6.2350, 80.0540],
+    "Kosgoda": [6.3320, 80.0270], "Bentota": [6.4210, 79.9980], "Beruwala": [6.4790, 79.9830], "Kalutara": [6.5854, 79.9607],
+    "Mount Lavinia": [6.8390, 79.8640], "Colombo": [6.9271, 79.8612], "Colombo Airport (CMB)": [7.1808, 79.8841], "Negombo": [7.2083, 79.8358],
+    "Mattala Airport (HRI)": [6.2845, 81.1241], "Ambalantota": [6.1180, 81.0260], "Hambantota": [6.1241, 81.1185], "Kirinda": [6.2190, 81.3290],
+    "Tissamaharama": [6.2790, 81.2870], "Yala National Park": [6.2720, 81.4030], "Kataragama": [6.4135, 81.3326],
+    "Udawalawe National Park": [6.4386, 80.8890], "Embilipitiya": [6.3439, 80.8490], "Wellawaya": [6.7370, 81.1030], "Ella": [6.8667, 81.0466],
+    "Haputale": [6.7650, 80.9580], "Bandarawela": [6.8290, 80.9870], "Horton Plains": [6.8020, 80.8070], "Nuwara Eliya": [6.9497, 80.7891],
+    "Hatton": [6.8920, 80.5960], "Adam's Peak (Dalhousie)": [6.8120, 80.4990], "Kitulgala": [6.9890, 80.4180], "Kandy": [7.2906, 80.6337],
+    "Pinnawala": [7.3000, 80.3870], "Dambulla": [7.8567, 80.6492], "Sigiriya": [7.9570, 80.7603], "Habarana": [8.0350, 80.7500],
+    "Polonnaruwa": [7.9403, 81.0188], "Anuradhapura": [8.3114, 80.4037], "Trincomalee": [8.5874, 81.2152], "Pasikudah": [7.9270, 81.5620],
+    "Arugam Bay": [6.8400, 81.8360], "Jaffna": [9.6615, 80.0255]
+  };
+  // 0 = name starts with the text, 1 = a word in the name starts with it, 2 = elsewhere
+  const placeScore = (name, k) => { const n = name.toLowerCase(); return n.startsWith(k) ? 0 : n.split(/[\s(,'-]+/).some(w => w.startsWith(k)) ? 1 : 2; };
+  const placeLocal = (q) => {
+    const k = q.trim().toLowerCase();
+    if (!k) return [];
+    return Object.keys(SL_PLACES).filter(n => placeScore(n, k) < 2)
+      .sort((a, b) => placeScore(a, k) - placeScore(b, k) || a.length - b.length).slice(0, 6)
+      .map(n => ({ name: n, sub: "Sri Lanka", lat: SL_PLACES[n][0], lng: SL_PLACES[n][1] }));
+  };
+  const placeSearch = async (q, limit) => {
+    const c = new AbortController(), t = setTimeout(() => c.abort(), 6000);
+    try {
+      const r = await fetch("https://photon.komoot.io/api/?lang=en&limit=" + (limit || 6) + "&bbox=79.4,5.8,82.0,9.9&q=" + encodeURIComponent(q), { signal: c.signal });
+      if (!r.ok) throw new Error("photon");
+      const j = await r.json();
+      return (j.features || []).filter(f => (f.properties.countrycode || "LK") === "LK").map(f => {
+        const p = f.properties;
+        const sub = [p.street, p.district || p.city || p.town || p.village, p.county || p.state].filter(Boolean).filter((v, i, a) => a.indexOf(v) === i && v !== p.name).join(", ");
+        return { name: p.name || q, sub: sub || "Sri Lanka", lat: f.geometry.coordinates[1], lng: f.geometry.coordinates[0] };
+      });
+    } finally { clearTimeout(t); }
+  };
+  const escAC = (v) => String(v == null ? "" : v).replace(/[&<>"]/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[ch]));
+  let acN = 0;
+  // Turn any text input into a place field with a suggestion list. onPick(place) is optional.
+  const attachPlaceAC = (input, onPick) => {
+    if (input.dataset.ac) return;
+    input.dataset.ac = "1";
+    input.setAttribute("autocomplete", "off");
+    let list = input.getAttribute("aria-controls") && document.getElementById(input.getAttribute("aria-controls"));
+    if (!list) {
+      const host = document.createElement("div"); host.className = "ac-host";
+      input.parentNode.insertBefore(host, input); host.appendChild(input);
+      list = document.createElement("ul"); list.className = "pl-ac"; list.id = "ac-list-" + (++acN); list.hidden = true; list.setAttribute("role", "listbox");
+      host.appendChild(list);
+      input.setAttribute("role", "combobox"); input.setAttribute("aria-autocomplete", "list"); input.setAttribute("aria-expanded", "false"); input.setAttribute("aria-controls", list.id);
+    }
+    let items = [], active = -1, timer = null, seq = 0;
+    const close = () => { list.hidden = true; input.setAttribute("aria-expanded", "false"); input.removeAttribute("aria-activedescendant"); active = -1; };
+    const render = (arr, note) => {
+      items = arr;
+      list.innerHTML = arr.map((it, i) => '<li role="option" id="' + list.id + '-' + i + '" data-i="' + i + '"><svg class="icon"><use href="#i-pin"/></svg><span>' +
+        escAC(it.name) + (it.sub ? '<small>' + escAC(it.sub) + '</small>' : '') + '</span></li>').join("") + (note ? '<li class="hint" role="presentation">' + note + '</li>' : "");
+      list.hidden = !arr.length && !note; input.setAttribute("aria-expanded", String(!list.hidden));
+    };
+    const pick = (i) => {
+      const it = items[i]; if (!it) return;
+      close();
+      if (onPick) onPick(it);
+      else {
+        input.value = it.sub && it.sub !== "Sri Lanka" ? it.name + ", " + it.sub.split(", ")[0] : it.name;
+        input.setAttribute("aria-invalid", "false");
+        input.dispatchEvent(new Event("change", { bubbles: true }));
+      }
+    };
+    const suggest = () => {
+      const q = input.value.trim(); clearTimeout(timer);
+      if (!q) { render(["Colombo Airport (CMB)", "Tangalle", "Mirissa", "Galle Fort", "Yala National Park", "Ella"].map(n => ({ name: n, sub: "Popular", lat: SL_PLACES[n][0], lng: SL_PLACES[n][1] })), ""); return; }
+      const local = placeLocal(q);
+      render(local, q.length >= 2 ? "Searching places…" : "");
+      if (q.length < 2) return;
+      const my = ++seq;
+      timer = setTimeout(async () => {
+        let remote = [];
+        try { remote = await placeSearch(q, 6); } catch (e) {}
+        if (my !== seq) return;
+        const seen = new Set(local.map(l => l.name.toLowerCase()));
+        const k = q.toLowerCase();
+        const all = local.concat(remote.filter(r => !seen.has(r.name.toLowerCase())))
+          .map((it, i) => ({ it, i, sc: placeScore(it.name, k) })).sort((a, b) => a.sc - b.sc || a.i - b.i).map(x => x.it).slice(0, 8);
+        render(all, all.length ? "" : "No matches yet. Keep typing, or try a nearby town.");
+      }, 250);
+    };
+    input.addEventListener("input", suggest);
+    input.addEventListener("focus", () => { if (!input.value.trim()) suggest(); });
+    input.addEventListener("keydown", e => {
+      if (list.hidden || !items.length) return;
+      if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+        e.preventDefault(); active = (active + (e.key === "ArrowDown" ? 1 : -1) + items.length) % items.length;
+        list.querySelectorAll("li[role=option]").forEach((li, i) => li.setAttribute("aria-selected", String(i === active)));
+        input.setAttribute("aria-activedescendant", list.id + "-" + active);
+        const cur = list.querySelector('[aria-selected="true"]'); if (cur) cur.scrollIntoView({ block: "nearest" });
+      } else if (e.key === "Enter" && active >= 0) { e.preventDefault(); pick(active); }
+      else if (e.key === "Escape") { e.stopPropagation(); close(); }
+    });
+    list.addEventListener("mousedown", e => { const li = e.target.closest("li[data-i]"); if (li) { e.preventDefault(); pick(+li.dataset.i); } });
+    input.addEventListener("blur", () => setTimeout(close, 150));
+  };
+  ["#qq-from", "#qq-to", "#f-pickup", "#f-dest"].forEach(sel => { const el = $(sel); if (el) attachPlaceAC(el); });
+
   /* ---- Booking request forms: every WhatsApp button opens a short form, builds the message, then opens WhatsApp ---- */
   const PLACES = ["Ella", "Nuwara Eliya", "Kandy", "Sigiriya", "Dambulla", "Galle", "Mirissa", "Yala", "Udawalawe", "Arugam Bay"];
   const TOURS = ["Yala safari", "Udawalawe elephant safari", "Galle Fort & coast", "Mirissa whale watching", "Hiriketiya & hidden bays (beach hopping)", "Mulkirigala rock temple & Hummanaya blowhole", "Something else"];
@@ -210,6 +319,7 @@ const CONFIG = {
       vehicle: ctx.vehicle ? VEHICLES.find(v => v.startsWith(ctx.vehicle)) : "", airport: /mattala/i.test(ctx.from) ? "Mattala (HRI)" : "",
       veh2: ctx.vehicle === "Van" ? "Van / shuttle (4–8)" : "" };
     bkFields.innerHTML = defs().map(([id, def]) => fieldHTML(id, def, init[id])).join("");
+    ["pickup", "dest", "from", "to", "place", "exact", "origin"].forEach(k => { const el = $("#bk-" + k); if (el) attachPlaceAC(el); });
     bkErr.textContent = "";
     update();
     bk.showModal();
@@ -256,19 +366,6 @@ const CONFIG = {
   /* ---- Trip planner: 3 steps, real road routing (OSRM / Valhalla), place suggestions (Photon / Nominatim), Leaflet map ---- */
   const plForm = $("#pl-form");
   if (plForm) {
-    const PLACES = {
-      "Tangalle": [6.0243, 80.7941], "Goyambokka": [6.0136, 80.7778], "Hiriketiya": [5.9636, 80.7097], "Dikwella": [5.9667, 80.6950],
-      "Rekawa": [6.0453, 80.8458], "Hummanaya Blowhole (Kudawella)": [5.9739, 80.7290], "Mulkirigala": [6.1200, 80.7380],
-      "Matara": [5.9485, 80.5353], "Mirissa": [5.9483, 80.4716], "Weligama": [5.9744, 80.4295], "Ahangama": [5.9733, 80.3669],
-      "Koggala": [5.9930, 80.3260], "Unawatuna": [6.0100, 80.2490], "Galle Fort": [6.0262, 80.2170], "Hikkaduwa": [6.1395, 80.1063],
-      "Bentota": [6.4210, 79.9980], "Colombo": [6.9271, 79.8612], "Colombo Airport (CMB)": [7.1808, 79.8841], "Negombo": [7.2083, 79.8358],
-      "Mattala Airport (HRI)": [6.2845, 81.1241], "Hambantota": [6.1241, 81.1185], "Tissamaharama": [6.2790, 81.2870],
-      "Yala National Park": [6.2720, 81.4030], "Kataragama": [6.4135, 81.3326], "Udawalawe National Park": [6.4386, 80.8890],
-      "Embilipitiya": [6.3439, 80.8490], "Wellawaya": [6.7370, 81.1030], "Ella": [6.8667, 81.0466], "Haputale": [6.7650, 80.9580],
-      "Bandarawela": [6.8290, 80.9870], "Nuwara Eliya": [6.9497, 80.7891], "Kandy": [7.2906, 80.6337], "Sigiriya": [7.9570, 80.7603],
-      "Dambulla": [7.8567, 80.6492], "Polonnaruwa": [7.9403, 81.0188], "Anuradhapura": [8.3114, 80.4037], "Trincomalee": [8.5874, 81.2152],
-      "Arugam Bay": [6.8400, 81.8360]
-    };
     // Avishka's set prices [car, van/shuttle] for direct trips, matched in either direction.
     const PRICES = [
       [/tangalle|goyambokka/i, /colombo airport|\bcmb\b|katunayake|bandaranaike/i, 25000, 33000],
@@ -291,20 +388,6 @@ const CONFIG = {
     $("#pl-date").min = $("#pl-date").value = today.toISOString().slice(0, 10);
 
     /* ---------- place suggestions ---------- */
-    const localMatches = (q) => {
-      const k = q.trim().toLowerCase();
-      return Object.keys(PLACES).filter(n => n.toLowerCase().includes(k)).sort((a, b) => a.toLowerCase().indexOf(k) - b.toLowerCase().indexOf(k)).slice(0, 5)
-        .map(n => ({ name: n, sub: "Sri Lanka", lat: PLACES[n][0], lng: PLACES[n][1] }));
-    };
-    const photon = async (q, limit) => {
-      const r = await withTimeout("https://photon.komoot.io/api/?lang=en&limit=" + limit + "&bbox=" + LK_BOX + "&q=" + encodeURIComponent(q), 6000);
-      if (!r.ok) throw new Error("photon");
-      const j = await r.json();
-      return (j.features || []).filter(f => (f.properties.countrycode || "LK") === "LK").map(f => {
-        const p = f.properties, sub = [p.street, p.district || p.city || p.town || p.village, p.county || p.state].filter(Boolean).filter((v, i, a) => a.indexOf(v) === i && v !== p.name).join(", ");
-        return { name: p.name || q, sub: sub || "Sri Lanka", lat: f.geometry.coordinates[1], lng: f.geometry.coordinates[0] };
-      });
-    };
     let lastNom = 0;
     const nominatim = async (q) => {
       const wait = 1100 - (Date.now() - lastNom); if (wait > 0) await new Promise(r => setTimeout(r, wait)); lastNom = Date.now();
@@ -316,9 +399,9 @@ const CONFIG = {
     const resolve = async (input) => {
       if (input.dataset.lat && input.dataset.label === input.value) return { name: input.value, lat: +input.dataset.lat, lng: +input.dataset.lng };
       const q = input.value.trim();
-      const exact = Object.keys(PLACES).find(n => n.toLowerCase() === q.toLowerCase()) || Object.keys(PLACES).find(n => n.toLowerCase().startsWith(q.toLowerCase()));
-      if (exact) return { name: exact, lat: PLACES[exact][0], lng: PLACES[exact][1] };
-      try { const p = await photon(q, 1); if (p.length) return { name: q, lat: p[0].lat, lng: p[0].lng }; } catch (e) {}
+      const exact = Object.keys(SL_PLACES).find(n => n.toLowerCase() === q.toLowerCase()) || Object.keys(SL_PLACES).find(n => n.toLowerCase().startsWith(q.toLowerCase()));
+      if (exact) return { name: exact, lat: SL_PLACES[exact][0], lng: SL_PLACES[exact][1] };
+      try { const p = await placeSearch(q, 1); if (p.length) return { name: q, lat: p[0].lat, lng: p[0].lng }; } catch (e) {}
       try { return await nominatim(q); } catch (e) { return null; }
     };
     const setPlace = (input, place) => {
@@ -326,45 +409,9 @@ const CONFIG = {
       input.setAttribute("aria-invalid", "false");
       previewMarkers();
     };
-    const pin = '<svg class="icon"><use href="#i-pin"/></svg>';
     const attachAC = (input) => {
-      const list = document.getElementById(input.getAttribute("aria-controls"));
-      let items = [], active = -1, timer = null, seq = 0;
-      const close = () => { list.hidden = true; input.setAttribute("aria-expanded", "false"); input.removeAttribute("aria-activedescendant"); active = -1; };
-      const render = (arr, note) => {
-        items = arr;
-        list.innerHTML = arr.map((it, i) => '<li role="option" id="' + list.id + '-' + i + '" data-i="' + i + '">' + pin + '<span>' + esc2(it.name) + (it.sub ? '<small>' + esc2(it.sub) + '</small>' : '') + '</span></li>').join("") +
-          (note ? '<li class="hint" role="presentation">' + note + '</li>' : "");
-        list.hidden = !arr.length && !note; input.setAttribute("aria-expanded", String(!list.hidden));
-      };
-      const pick = (i) => { if (items[i]) { setPlace(input, items[i]); close(); } };
-      input.addEventListener("input", () => {
-        delete input.dataset.lat; delete input.dataset.label;
-        const q = input.value.trim(); clearTimeout(timer);
-        if (!q) { close(); return; }
-        const local = localMatches(q);
-        render(local, q.length >= 3 ? "Searching places…" : "");
-        if (q.length < 3) return;
-        const my = ++seq;
-        timer = setTimeout(async () => {
-          let remote = [];
-          try { remote = await photon(q, 6); } catch (e) {}
-          if (my !== seq) return;
-          const seen = new Set(local.map(l => l.name.toLowerCase()));
-          render(local.concat(remote.filter(r => !seen.has(r.name.toLowerCase()))).slice(0, 8), remote.length || local.length ? "" : "No matches yet. Keep typing, or try a nearby town.");
-        }, 280);
-      });
-      input.addEventListener("keydown", e => {
-        if (list.hidden || !items.length) return;
-        if (e.key === "ArrowDown" || e.key === "ArrowUp") {
-          e.preventDefault(); active = (active + (e.key === "ArrowDown" ? 1 : -1) + items.length) % items.length;
-          $$("li[role=option]", list).forEach((li, i) => li.setAttribute("aria-selected", String(i === active)));
-          input.setAttribute("aria-activedescendant", list.id + "-" + active);
-        } else if (e.key === "Enter" && active >= 0) { e.preventDefault(); pick(active); }
-        else if (e.key === "Escape") close();
-      });
-      list.addEventListener("mousedown", e => { const li = e.target.closest("li[data-i]"); if (li) { e.preventDefault(); pick(+li.dataset.i); } });
-      input.addEventListener("blur", () => setTimeout(close, 150));
+      input.addEventListener("input", () => { delete input.dataset.lat; delete input.dataset.label; });
+      attachPlaceAC(input, place => setPlace(input, place));
     };
     $$(".pl-place", plForm).forEach(attachAC);
 
@@ -467,8 +514,8 @@ const CONFIG = {
     $$(".pl-quick button", plForm).forEach(btn => btn.addEventListener("click", () => {
       const [a, b] = btn.dataset.pl.split("|");
       $$(".pl-row[data-kind=via]", stopsBox).forEach(r => stopsBox.removeChild(r));
-      setPlace($("#pl-from"), { name: a, lat: PLACES[a][0], lng: PLACES[a][1] });
-      setPlace($("#pl-to"), { name: b, lat: PLACES[b][0], lng: PLACES[b][1] });
+      setPlace($("#pl-from"), { name: a, lat: SL_PLACES[a][0], lng: SL_PLACES[a][1] });
+      setPlace($("#pl-to"), { name: b, lat: SL_PLACES[b][0], lng: SL_PLACES[b][1] });
       $("#pl-return").checked = false;
       if (plForm.requestSubmit) plForm.requestSubmit(); else $("#pl-go").click();
     }));

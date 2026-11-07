@@ -535,7 +535,8 @@ section{position:relative}
 .pl-link .icon{width:16px;height:16px}
 .pl-x{width:46px;height:50px;border-radius:12px;border:1.5px solid var(--line);background:transparent;cursor:pointer;color:var(--coral);font-size:1.3rem}
 .pl-ac-wrap{position:relative}
-.pl-ac{position:absolute;left:0;right:0;top:100%;z-index:30;margin:6px 0 0;padding:6px;list-style:none;background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow-lg);max-height:290px;overflow:auto}
+.ac-host{position:relative}
+.pl-ac{color:var(--ink);text-align:left;text-transform:none;letter-spacing:normal;font-weight:400;position:absolute;left:0;right:0;top:100%;z-index:30;margin:6px 0 0;padding:6px;list-style:none;background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow-lg);max-height:290px;overflow:auto}
 .pl-ac li{padding:10px 12px;border-radius:10px;cursor:pointer;display:flex;gap:10px;align-items:flex-start;font-size:.95rem}
 .pl-ac li .icon{width:16px;height:16px;margin-top:3px;color:var(--brand);flex:none}
 .pl-ac li small{display:block;color:var(--muted);font-size:.8rem}
